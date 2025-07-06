@@ -23,7 +23,7 @@ const Hero = ({ slider }) => {
                   <div className="dictation-buttons-container">
                   <Link key={0}
                     to={`/dictation/${dictation.id}`}
-                    state={{ language: dictation.language }}>
+                    state={{ dictation: dictation }}>
                     <div className="play-button-icon-container">
                       <Emoji className="play-button-icon" emoji={dictation.language} size={75}/>
                     </div>

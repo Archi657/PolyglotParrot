@@ -3,7 +3,6 @@ import api from './axiosConfig';
 // can be improved to receive less items. maybe keep random?
 export const getSlider = async () => {
   try {
-    console.log(api)
     const response = await api.get("/dictations/random/5");
     return(response);
   } catch (error) {
@@ -46,24 +45,28 @@ export const postDictation = async (userID, dictation, typedText) => {
 
 
 // maybe delete and replace it?
-export const getDictationAudio = async (id, language) => {
+export const getDictationAudios = async (audios) => {
   try {
-    // Fetch the audio file for the dictation
-    const response = await api.post(
-      `/api/v1/dictations/audio/${id}`,
-      { language }, // Include language in the body
-      {
-        responseType: 'blob', // Important to set the response type to blob
-      }
-    );
+    const urls = [];
 
-    // Create a blob URL from the audio file
-    const audioUrl = URL.createObjectURL(response.data);
-    return audioUrl;
+    for (const audio of audios) {
+      const response = await api.get(`/dictations/audio/${audio.file_id}`, {
+        responseType: 'blob',
+      });
+
+      const audioUrl = URL.createObjectURL(response.data);
+      urls.push({
+        label: audio.label,
+        url: audioUrl
+      });
+    }
+
+    return urls;
   } catch (error) {
-    console.error('Error fetching dictation audio:', error);
+    console.error('Error fetching dictation audios:', error);
     throw error;
   }
 };
+
 
 
