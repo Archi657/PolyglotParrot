@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from configurations import dictation_collection, user_collection
-from router_factory import create_crud_router
+from db.configurations import dictation_collection, user_collection
+from db.router_factory import create_crud_router
 from solution.routes import solution_router
 
 from dictation.models import DictationCreate, DictationUpdate
@@ -32,4 +32,4 @@ user_router = create_crud_router(
 )
 app.include_router(user_router, prefix="/users", tags=["Users"])
 
-app.include_router(solution_router, prefix="/solutions", tags=["solutions"])
+app.include_router(solution_router, prefix="/solutions", tags=["Solutions"])

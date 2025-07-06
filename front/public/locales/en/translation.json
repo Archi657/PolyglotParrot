@@ -1,0 +1,23 @@
+{
+    "Header": {
+        "home" : "Home",
+        "dictations" : "Dictations",
+        "aboutus" : "About Us",
+        "supportus" : "Support Us",
+        "login" : "Login",
+        "register" : "Register"
+    },
+    "Home Description": "Select a dictation to begin. A text field and audio clips will appear. Listen carefully to each audio clip and transcribe what you hear as accurately as possible. Once you've finished, you'll be able to review your results.",
+    "Language Change":{
+        "description" : "Are you sure you want to change the language ?"
+    },
+    "Dictation Header": {
+        "Diclanguage": "Language",
+        "Diclanguages": "Avaliable in these languages"
+    },
+    "Options":{
+        "yes": "yes",
+        "no": "no"
+    }
+
+}

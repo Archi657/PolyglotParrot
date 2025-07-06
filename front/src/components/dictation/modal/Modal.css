@@ -1,0 +1,36 @@
+body.active-modal {
+    overflow-y: hidden;
+}
+
+.modal, .overlay {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    position: fixed;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlay {
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+}
+
+.modal-content {
+    width: 500px;
+    background: #36393e;
+    border-radius: 6px;
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 1001;
+    text-align: center;
+}
+
+.btn-modal {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+}

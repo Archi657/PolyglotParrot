@@ -3,7 +3,7 @@ from typing import Callable, Type
 from bson.objectid import ObjectId
 from datetime import datetime
 
-from configurations import solution_collection
+from db.configurations import solution_collection
 
 from solution.models import SolutionCreate, SolutionInput
 from solution.schemas import serialization_solution

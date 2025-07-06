@@ -1,0 +1,36 @@
+/* Control the grid layout */
+.dictation-card {
+    height: 25rem; /* Ensures all cards have the same height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .dictation-card-img {
+    height: 12rem; /* Fixed image height */
+    object-fit: cover; /* Ensures images are cropped to fit */
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+  }
+  
+  .dictation-card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+  
+  .dictation-card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .dictation-card-text {
+    font-size: 0.9rem;
+    color: #555;
+    text-align: justify;
+    flex-grow: 1;
+  }
+  
