@@ -12,10 +12,10 @@ const Hero = ({ slider }) => {
         {slider.map((dictation) => (
           <Paper key={dictation.id}>
             <div className="dictation-card-container">
-              <div className="dictation-card" style={{"--img": `url(${dictation.backdrops[0]})`}}>
+              <div className="dictation-card" style={{"--img": `url(${dictation.bgImage})`}}>
                 <div className="dictation-detail">
                   <div className="dictation-poster">
-                    <img src={dictation.poster} alt=""/>
+                    <img src={dictation.image} alt=""/>
                   </div>
                   <div className="dictation-title ">
                     <h4>{dictation.title}</h4>

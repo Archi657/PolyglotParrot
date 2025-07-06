@@ -1,5 +1,37 @@
 import api from './axiosConfig';
 
+// can be improved to receive less items. maybe keep random?
+export const getSlider = async () => {
+  try {
+    console.log(api)
+    const response = await api.get("/dictations/random/5");
+    return(response);
+  } catch (error) {
+    console.error('Error fetching dictations:', error);
+  }
+}
+
+// Fetch dictation details
+export const getDictationDetails = async (id) => {
+  try {
+    // Fetch dictation details
+    const response = await api.get(`/dictations/${id}`);
+    const dictation = {
+      id: id,
+      title: response.data.title,
+      text: response.data.text,
+      language: response.data.language,
+      //audio
+    };
+
+    return dictation;
+  } catch (error) {
+    console.error('Error fetching dictation details:', error);
+    throw error;
+  }
+};
+
+//change name, fix details
 export const postDictation = async (userID, dictation, typedText) => {
   try {
     // Fetch dictation details
@@ -11,26 +43,9 @@ export const postDictation = async (userID, dictation, typedText) => {
   }
 };
 
-// Fetch dictation details
-export const getDictationDetails = async (id) => {
-  try {
-    // Fetch dictation details
-    const response = await api.get(`/api/v1/dictations/${id}`);
-    const dictation = {
-      id: id,
-      title: response.data.title,
-      text: response.data.text,
-      language: response.data.language,
-    };
 
-    return dictation;
-  } catch (error) {
-    console.error('Error fetching dictation details:', error);
-    throw error;
-  }
-};
 
-// Fetch audio file for dictation
+// maybe delete and replace it?
 export const getDictationAudio = async (id, language) => {
   try {
     // Fetch the audio file for the dictation
@@ -51,11 +66,4 @@ export const getDictationAudio = async (id, language) => {
   }
 };
 
-export const getSlider = async () => {
-  try {
-    const response = await api.get("/api/v1/dictations/slider");
-    return(response);
-  } catch (error) {
-    console.error('Error fetching dictations:', error);
-  }
-}
+

@@ -9,8 +9,17 @@ from dictation.schemas import serialize_dictation
 from user.models import UserCreate, UserUpdate
 from user.schemas import serialize_user
 
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # or ["*"] for all origins (not safe for production)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Reuse the same logic for Dictation
 dictation_router = create_crud_router(
