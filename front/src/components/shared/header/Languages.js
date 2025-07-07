@@ -20,14 +20,13 @@ const Languages = () => {
     return (
         <>
             {languages.map((lng) => (
-                <div key={lng.code} style={{ display: "inline-flex", alignItems: "center" }}>
-                    <Emoji 
+                <div key={lng.code} style={{ display: "inline-flex", alignItems: "center", padding: "2px" }}>
+                    <Emoji
                         emoji={lng.lang}
                         size={24}
                         onClick={() => changeLanguage(lng.code)}
                         cursor={"pointer"}
                     />
-                    <span> </span>
                 </div>
             ))}
         </>

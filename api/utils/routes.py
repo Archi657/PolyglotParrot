@@ -29,6 +29,16 @@ async def get_slider(user_id: str):
         return solutions
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Some error occurred: {e}")
+    
+@solution_router.get("/slider")
+async def get_slider(user_id: str):
+    try:
+        data = collection.find()
+        slider = [dictation_collection(doc) for doc in data]
+
+        return solutions
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Some error occurred: {e}")
 
              
           

@@ -5,7 +5,7 @@ from solution.routes import solution_router
 
 from dictation.models import DictationCreate, DictationUpdate
 from dictation.schemas import serialize_dictation
-
+from dictation.routes import dictation_p_router
 from user.models import UserCreate, UserUpdate
 from user.schemas import serialize_user
 
@@ -31,6 +31,7 @@ dictation_router = create_crud_router(
 )
 
 app.include_router(dictation_router, prefix="/dictations", tags=["Dictations"])
+app.include_router(dictation_p_router, prefix="/dictations", tags=["Dictations"])
 
 user_router = create_crud_router(
     collection=user_collection,
