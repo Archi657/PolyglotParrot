@@ -1,17 +1,19 @@
 import React from "react";
+import { Spinner, Alert, Container } from "react-bootstrap";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const AudioPlayer = ({ audioFile }) => {
   return (
-      <div>
-          {audioFile ? (
-              <audio controls>
-                  <source src={audioFile} type="audio/mpeg" />
-                  Your browser does not support the audio tag.
-              </audio>
-          ) : (
-              <p>Loading audio...</p>
-          )}
-      </div>
+    <Container className="mt-3">
+      {audioFile ? (
+        <audio controls className="w-100">
+          <source src={audioFile} type="audio/mpeg" />
+          Your browser does not support the audio element.
+        </audio>
+      ) : (
+        <CircularProgress color="secondary" />
+      )}
+    </Container>
   );
 };
 

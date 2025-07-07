@@ -29,6 +29,7 @@
 }
 
 .dictation-audio {
+  padding: 30px;
   flex: 1;
   max-width: 600px; /* Adjust this value based on your minimum desired width */
   margin: 10px; /* Add some spacing between items */

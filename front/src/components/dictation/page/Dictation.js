@@ -7,6 +7,9 @@ import AudioPlayer from '../audio/AudioPlayer';
 import HeaderDictation from '../header-dictation/HeaderDictation';
 import ConfirmButton from '../../shared/btn-confirm/ConfirmButton';
 
+import CircularProgress from '@mui/material/CircularProgress';
+import { LinearProgress } from '@mui/material';
+
 import { getDictationDetails, getDictationAudios } from '../../../api/routes';
 
 const Dictation = () => {
@@ -73,7 +76,10 @@ const Dictation = () => {
                             </div>
                         ))
                     ) : (
-                        <p>Loading audio...</p>
+                        <div>
+                            <p>Loading audios</p>
+                            <CircularProgress size="30px" />
+                        </div>
                     )}
                 </div>
             </div>

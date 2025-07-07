@@ -9,8 +9,8 @@ const ButtonLanguages = ({ languagesAvaliable }) => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const changeLanguage  = (lng) => { 
-        navigate(`/dictation/${id}`, { state: { languageChange: lng, languageOld: location.state.language  } });
+    const changeLanguage = (lng) => {
+        navigate(`/dictation/${id}`, { state: { languageChange: lng, languageOld: location.state.language } });
     };
 
     return (
@@ -18,18 +18,18 @@ const ButtonLanguages = ({ languagesAvaliable }) => {
             {languagesAvaliable.map((lng) => {
                 console.log(lng)
                 //if (languagesAvaliable.includes(lng.lang)) {
-                    return (
-                        <React.Fragment key={lng}>
-                            <Emoji
-                                emoji={lng}
-                                size={24}
-                                onClick={() => changeLanguage(lng)} // Corrected here
-                                cursor={"pointer"}
-                            />
-                            <p1> </p1>
-                        </React.Fragment>
-                    );
-               // }
+                return (
+                    <React.Fragment key={lng}>
+                        <Emoji
+                            emoji={lng}
+                            size={24}
+                            onClick={() => changeLanguage(lng)} // Corrected here
+                            cursor={"pointer"}
+                        />
+                        <p1>     </p1>
+                    </React.Fragment>
+                );
+                // }
                 return null;
             })}
         </>
