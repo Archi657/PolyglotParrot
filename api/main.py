@@ -8,6 +8,7 @@ from dictation.schemas import serialize_dictation
 from dictation.routes import dictation_p_router
 from user.models import UserCreate, UserUpdate
 from user.schemas import serialize_user
+from auth.routes import auth_router
 
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -43,3 +44,5 @@ user_router = create_crud_router(
 app.include_router(user_router, prefix="/users", tags=["Users"])
 
 app.include_router(solution_router, prefix="/solutions", tags=["Solutions"])
+
+app.include_router(auth_router, prefix="/auth", tags="auth" )
