@@ -1,5 +1,5 @@
 import api from './axiosConfig';
-
+import { jwtDecode } from 'jwt-decode';
 // can be improved to receive less items. maybe keep random?
 export const getSlider = async () => {
   try {
@@ -99,8 +99,10 @@ export const login = async (user) => {
 
     // Optional: store the access token in localStorage/sessionStorage
     const token = response.data.access_token;
+    const decoded = jwtDecode(token)
+
     localStorage.setItem('token', token); // or sessionStorage.setItem()
-    localStorage.setItem("username", JSON.stringify(response.username));
+    localStorage.setItem('username', decoded.username)
 
     return response.data;
   } catch (error) {
