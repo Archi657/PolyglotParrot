@@ -2,15 +2,15 @@ import './Dictation.css';
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 
-import TextDictation from '../text-dictation/TextDictation';
-import AudioPlayer from '../audio/AudioPlayer';
-import HeaderDictation from '../header-dictation/HeaderDictation';
-import ConfirmButton from '../../shared/btn-confirm/ConfirmButton';
+import TextDictation from './TextDictation';
+import AudioPlayer from './AudioPlayer';
+import HeaderDictation from './HeaderDictation';
+import ConfirmButton from "../shared/btn-confirm/ConfirmButton"
 
 import CircularProgress from '@mui/material/CircularProgress';
-import { LinearProgress } from '@mui/material';
+//import { LinearProgress } from '@mui/material';
 
-import { getDictationDetails, getDictationAudios } from '../../../api/routes';
+import { getDictationDetails, getDictationAudios } from '../../api/routes';
 
 const Dictation = () => {
     const [dictation, setDictation] = useState({});

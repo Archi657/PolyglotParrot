@@ -100,6 +100,7 @@ export const login = async (user) => {
     // Optional: store the access token in localStorage/sessionStorage
     const token = response.data.access_token;
     localStorage.setItem('token', token); // or sessionStorage.setItem()
+    localStorage.setItem("username", JSON.stringify(response.username));
 
     return response.data;
   } catch (error) {

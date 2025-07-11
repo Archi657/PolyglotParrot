@@ -17,8 +17,22 @@ def login(form_data: OAuth2PasswordRequestForm = Depends()):
     user = get_user_by_email(form_data.username)
     if not user or not verify_password(form_data.password, user["hashed_password"]):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Email ou mot de passe invalide")
-    token = create_access_token({"sub": user["email"]})
-    return {"access_token": token, "token_type": "bearer"}
+    
+    token_data = {
+        "sub": user["email"],
+        "username": user["name"]  # ✅ use the actual key that exists
+    }
+
+    token = create_access_token(token_data)
+    return {
+        "access_token": token,
+        "token_type": "bearer",
+        "user": {
+            "username": user["name"],
+            "email": user["email"]
+        }
+    }
+
 
 def get_current_user(token: str = Depends(oauth2_scheme)):
     payload = decode_access_token(token)
@@ -29,9 +43,14 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
         raise HTTPException(status_code=401, detail="Utilisateur non trouvé")
     return user
 
-@auth_router.get("/me")
-def me(current_user: dict = Depends(get_current_user)):
-    return {"email": current_user["email"]}
+def get_current_user(token: str = Depends(oauth2_scheme)):
+    payload = decode_access_token(token)
+    if not payload:
+        raise HTTPException(status_code=401, detail="Token invalide ou expiré")
+    user = get_user_by_email(payload.get("sub"))
+    if not user:
+        raise HTTPException(status_code=401, detail="Utilisateur non trouvé")
+    return user
              
 @auth_router.post("/register")
 def register(user: UserCreate):
