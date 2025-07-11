@@ -17,7 +17,7 @@ class UserUpdate(BaseModel):
     password: Optional[str] = None
 
 class UserInDB(UserBase):
-    hashed_password: str
+    password: str
     creation: int
     updated_at: int
     is_deleted: bool = False

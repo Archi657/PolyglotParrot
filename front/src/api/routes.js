@@ -4,7 +4,7 @@ import api from './axiosConfig';
 export const getSlider = async () => {
   try {
     const response = await api.get("/dictations/random/5");
-    return(response);
+    return (response);
   } catch (error) {
     console.error('Error fetching dictations:', error);
   }
@@ -68,5 +68,42 @@ export const getDictationAudios = async (audios) => {
   }
 };
 
+export const register = async (user) => {
+  try {
+    const name = user.name
+    const password = user.password
+    const email = user.email
+    const response = await api.post(`/auth/register`, { name, email, password });
+    return response.data
+  } catch (error) {
+    console.error('Error with register method:', error);
+    throw error;
+  }
+};
 
+export const login = async (user) => {
+  try {
+    // OAuth2PasswordRequestForm expects these keys:
+    const params = new URLSearchParams();
+    params.append('grant_type', 'password');
+    params.append('username', user.email);     // Even though it's email, backend expects "username"
+    params.append('password', user.password);
+    params.append('scope', '');
 
+    // Make the POST request with correct headers and body
+    const response = await api.post('/auth/login', params, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+
+    // Optional: store the access token in localStorage/sessionStorage
+    const token = response.data.access_token;
+    localStorage.setItem('token', token); // or sessionStorage.setItem()
+
+    return response.data;
+  } catch (error) {
+    console.error('Error with login method:', error.response?.data || error.message);
+    throw error;
+  }
+};
