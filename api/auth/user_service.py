@@ -16,7 +16,7 @@ def create_user(user_data: UserCreate):
     hashed_pwd = hash_password(user_data.password)
 
     user_doc = {
-        "name": user_data.name,
+        "username": user_data.username,
         "email": user_data.email,
         "hashed_password": hashed_pwd,
         "creation": now,

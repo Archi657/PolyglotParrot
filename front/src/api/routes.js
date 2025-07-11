@@ -70,10 +70,10 @@ export const getDictationAudios = async (audios) => {
 
 export const register = async (user) => {
   try {
-    const name = user.name
+    const username = user.username
     const password = user.password
     const email = user.email
-    const response = await api.post(`/auth/register`, { name, email, password });
+    const response = await api.post(`/auth/register`, { username, email, password });
     return response.data
   } catch (error) {
     console.error('Error with register method:', error);

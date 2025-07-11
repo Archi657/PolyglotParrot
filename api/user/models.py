@@ -5,14 +5,14 @@ from datetime import datetime
 from typing import Optional
 
 class UserBase(BaseModel):
-    name: str
+    username: str
     email: EmailStr
 
 class UserCreate(UserBase):
     password: str  # for registration
 
 class UserUpdate(BaseModel):
-    name: Optional[str] = None
+    username: Optional[str] = None
     email: Optional[EmailStr] = None
     password: Optional[str] = None
 
