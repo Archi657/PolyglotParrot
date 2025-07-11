@@ -12,6 +12,7 @@ import NotFound from './components/shared/not-found/NotFound';
 import { getSlider } from './api/routes';
 import Footer from './components/shared/footer/Footer';
 import SignUp from './components/shared/header/SignUp';
+import SignIn from './components/shared/header/SignIn';
 function App() {
   const [slider, setSlider] = useState([]);
 
@@ -46,6 +47,7 @@ function App() {
           <Route path="/dictations/" element={<Dictations />} />
           <Route path="/profile/" element={<Profile />} />
           <Route path="/register/" element={<SignUp />} />
+          <Route path="/login/" element={<SignIn />} />
         </Route>
       </Routes>
       <Footer />

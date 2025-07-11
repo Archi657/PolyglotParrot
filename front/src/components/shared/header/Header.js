@@ -34,6 +34,8 @@ const Header = () => {
     const getUserEmail = (token) => {
         try {
             const decoded = jwtDecode(token);
+            console.log("token")
+            console.log(decoded)
             return decoded.sub || decoded.email;
         } catch {
             return null;
