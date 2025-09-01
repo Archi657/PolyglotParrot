@@ -34,7 +34,10 @@ export const getDictationDetails = async (id) => {
 export const postDictation = async (userID, dictation, typedText) => {
   try {
     // Fetch dictation details
-    const response = await api.post(`/api/v1/solve`, { userID, dictation, typedText });
+    const dictationID = dictation.id
+    const dictationTitle = dictation.title
+    const dictationText = dictation.text
+    const response = await api.post(`/solutions/`, { userID, dictationID, dictationTitle, dictationText, typedText });
     return response.data
   } catch (error) {
     console.error('Error fetching dictation details:', error);

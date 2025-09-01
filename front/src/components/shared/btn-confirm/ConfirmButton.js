@@ -28,7 +28,7 @@ const ConfirmButton = ({ actionType, buttonText, dictation, typedText, setCorrec
       // I will also need here the User ID when log in is ready to identify the user
       // from dic I need, ID-TITLE-TEXT, 
       // typedText
-      const userID='6653456534e0a674a097bc17'
+      const userID = '6653456534e0a674a097bc17'
       const response = await postDictation(userID, dictation, typedText);
       console.log("Response from backend:", response);
       if (response?.comparison_result?.result) {
@@ -39,7 +39,7 @@ const ConfirmButton = ({ actionType, buttonText, dictation, typedText, setCorrec
       console.error("Error sending dictation:", error);
     }
   };
-  
+
 
   const deleteItem = () => {
     console.log("Deleting item...");
