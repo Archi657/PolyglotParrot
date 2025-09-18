@@ -20,7 +20,7 @@ def login(form_data: OAuth2PasswordRequestForm = Depends()):
     
     token_data = {
         "sub": user["email"],
-        "username": user["name"]  # ✅ use the actual key that exists
+        "username": user["username"] 
     }
 
     token = create_access_token(token_data)
@@ -28,7 +28,7 @@ def login(form_data: OAuth2PasswordRequestForm = Depends()):
         "access_token": token,
         "token_type": "bearer",
         "user": {
-            "username": user["name"],
+            "username": user["username"],
             "email": user["email"]
         }
     }
