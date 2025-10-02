@@ -37,7 +37,7 @@ async def solve(data: SolutionInput):
 
         resp = collection.insert_one(solution.dict())
 
-        return {"status_code": 200, "id": str(resp.inserted_id)}
+        return {"status_code": 200, "id": str(resp.inserted_id), "result": [comparison_result["result"], comparison_result["accuracy"]]}
     except Exception as e:
             raise HTTPException(status_code=500, detail=f"Some error occurred: {e}")
 

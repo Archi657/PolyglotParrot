@@ -53,6 +53,7 @@ export const getDictationAudios = async (audios) => {
     const urls = [];
 
     for (const audio of audios) {
+      console.log("Audio : ", audio.file_id)
       const response = await api.get(`/dictations/audio/${audio.file_id}`, {
         responseType: 'blob',
       });
@@ -103,9 +104,12 @@ export const login = async (user) => {
     // Optional: store the access token in localStorage/sessionStorage
     const token = response.data.access_token;
     const decoded = jwtDecode(token)
+    console.log("user token ",  response.data)
+    //const userId = response.data.user_token.userid;
 
     localStorage.setItem('token', token); // or sessionStorage.setItem()
     localStorage.setItem('username', decoded.username)
+    localStorage.setItem('id', decoded.id)
 
     return response.data;
   } catch (error) {

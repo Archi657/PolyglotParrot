@@ -9,6 +9,7 @@ const TextDictation = ({ onTextChange, correctedText }) => {
     if (textRef.current) {
       if (correctedText) {
         // Clear the actual content inside the contentEditable div
+        console.log("corrected text")
         textRef.current.innerText = '';
         onTextChange('');
         setShowInput(false);
@@ -50,8 +51,8 @@ const TextDictation = ({ onTextChange, correctedText }) => {
         ></div>
       ) : (
         <div className="corrected-text">
-          {Array.isArray(correctedText) ? (
-            correctedText.map((word, index) => (
+          {Array.isArray(correctedText[0]) ? (
+            correctedText[0].map((word, index) => (
               <span key={index} className={word.status}>
                 {word.text + " "}
               </span>

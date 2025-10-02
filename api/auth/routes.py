@@ -20,18 +20,22 @@ def login(form_data: OAuth2PasswordRequestForm = Depends()):
     
     token_data = {
         "sub": user["email"],
-        "username": user["username"] 
+        "username": user["username"],
+        "id": user["id"]
     }
 
     token = create_access_token(token_data)
-    return {
+    user = {
         "access_token": token,
         "token_type": "bearer",
-        "user": {
+        "user_token": {
+            "userid": user["id"],
             "username": user["username"],
             "email": user["email"]
         }
     }
+    print(user)
+    return user
 
 
 def get_current_user(token: str = Depends(oauth2_scheme)):

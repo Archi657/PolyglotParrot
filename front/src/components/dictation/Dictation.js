@@ -65,6 +65,15 @@ const Dictation = () => {
                         typedText={typedText}
                         setCorrectedText={setCorrectedText}
                     />
+                    {correctedText && (
+                        <>
+                        <div className="">
+                            <h1 className='dictation-header-score'>Resultado</h1>
+                            <p className='dictation-score'>{correctedText[1]}%</p>
+                        </div>
+                            
+                        </>
+                    )}
                 </div>
 
                 <div className="dictation-audio">
