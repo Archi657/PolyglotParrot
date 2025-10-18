@@ -1,33 +1,41 @@
 import React from "react";
-import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import './CardDic.css'; // Import external CSS file
-
+import "./CardDic.css";
+import Emoji from "../../shared/emoji/Emoji";
 const CardDic = ({ dictations }) => {
-  console.log('cardic component', dictations);
-
   return (
-    <Row xs={1} sm={2} md={3} className="g-4">
+    <div className="cards-container">
       {dictations.map((dictation, idx) => (
-        <Col key={idx}>
-          <Card className="dictation-card">
-            <Card.Img 
-              variant="top" 
-              src={dictation.bgImage || "holder.js/100px160"} 
-              alt="Dictation Image" 
-              className="dictation-card-img" 
+        <a
+          key={idx}
+          href="#"
+          className="card"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <div className="wrapper">
+            <img
+              src={dictation.bgImage}
+              alt={dictation.title}
+              className="cover-image"
             />
-            <Card.Body className="dictation-card-body">
-              <Card.Title className="dictation-card-title">{dictation.title}</Card.Title>
-              <Card.Text className="dictation-card-text">
-                {dictation.description}
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
+          </div>
+
+          <h2 className="title"><Emoji
+                key="en"
+                emoji={dictation.language}
+                size={24}
+            /> {dictation.title}</h2>
+
+          {dictation.image && (
+            <img
+              src={dictation.image}
+              alt={dictation.title}
+              className="character"
+            />
+          )}
+        </a>
       ))}
-    </Row>
+    </div>
   );
 };
 

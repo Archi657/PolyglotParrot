@@ -28,6 +28,10 @@ const TextDictation = ({ onTextChange, correctedText }) => {
   };
 
   const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      //return; // stop further handling
+    }
     // Only block unwanted Ctrl shortcuts
     if ((e.ctrlKey || e.metaKey) && !["a", "x", "c"].includes(e.key.toLowerCase())) {
       e.preventDefault();
