@@ -1,7 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
+
 import { postDictation } from '../../../api/routes'
 
 const ConfirmButton = ({ actionType, buttonText, dictation, typedText, setCorrectedText }) => {
+   const [isVisible, setIsVisible] = useState(true);
+
   const handleClick = () => {
     const confirmAction = window.confirm("Are you sure you want to proceed?");
     if (confirmAction) {
@@ -28,18 +31,21 @@ const ConfirmButton = ({ actionType, buttonText, dictation, typedText, setCorrec
       // I will also need here the User ID when log in is ready to identify the user
       // from dic I need, ID-TITLE-TEXT, 
       // typedText
-      const userID='6653456534e0a674a097bc17'
+      const userID = localStorage.getItem("id")
       const response = await postDictation(userID, dictation, typedText);
       console.log("Response from backend:", response);
-      if (response?.comparison_result?.result) {
-        setCorrectedText(response.comparison_result.result);
+      if (response?.result) {
+        setCorrectedText(response.result);
+        console.log("corrected text : ", response.result)
+
       }
+      setIsVisible(!isVisible)
       return response;
     } catch (error) {
       console.error("Error sending dictation:", error);
     }
   };
-  
+
 
   const deleteItem = () => {
     console.log("Deleting item...");
@@ -52,9 +58,13 @@ const ConfirmButton = ({ actionType, buttonText, dictation, typedText, setCorrec
   };
 
   return (
+    <>
+    {isVisible && (
     <button onClick={handleClick} style={buttonStyle}>
       {buttonText}
     </button>
+    )}
+    </>
   );
 };
 

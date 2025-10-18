@@ -1,0 +1,64 @@
+.text-container {
+  width: 100%;
+  min-height: 200px;       /* Ensure you see the box even if empty */
+  max-height: 400px;
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  cursor: text;
+}
+
+.text-display {
+  flex: 1;
+  min-height: 1.5rem;     /* Important for visibility of empty line */
+  font-family: monospace;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  color: #ffffff;
+  outline: none;
+  border: none;
+  background: transparent;
+  white-space: pre-wrap;
+  word-break: break-word;
+  caret-color: #9fbe10;
+}
+
+
+/* Optional — Remove the fake caret, since contentEditable already has one */
+/*
+.text-display::after {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 1.4rem;
+  background-color: #9fbe10;
+  animation: blink 0.8s steps(2, start) infinite;
+}
+*/
+
+.corrected-text {
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  font-family: monospace;
+  color: #fff;
+}
+
+.correct {
+  color: #8ae234;
+  font-weight: bold;
+}
+
+.incorrect {
+  color: #ef2929;
+  text-decoration: underline;
+}
+
+.extra {
+  color: #babdb6;
+  font-style: italic;
+}

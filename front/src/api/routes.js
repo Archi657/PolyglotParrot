@@ -1,5 +1,5 @@
 import api from './axiosConfig';
-
+import { jwtDecode } from 'jwt-decode';
 // can be improved to receive less items. maybe keep random?
 export const getSlider = async () => {
   try {
@@ -34,7 +34,10 @@ export const getDictationDetails = async (id) => {
 export const postDictation = async (userID, dictation, typedText) => {
   try {
     // Fetch dictation details
-    const response = await api.post(`/api/v1/solve`, { userID, dictation, typedText });
+    const dictationID = dictation.id
+    const dictationTitle = dictation.title
+    const dictationText = dictation.text
+    const response = await api.post(`/solutions/`, { userID, dictationID, dictationTitle, dictationText, typedText });
     return response.data
   } catch (error) {
     console.error('Error fetching dictation details:', error);
@@ -50,6 +53,7 @@ export const getDictationAudios = async (audios) => {
     const urls = [];
 
     for (const audio of audios) {
+      console.log("Audio : ", audio.file_id)
       const response = await api.get(`/dictations/audio/${audio.file_id}`, {
         responseType: 'blob',
       });
@@ -70,10 +74,10 @@ export const getDictationAudios = async (audios) => {
 
 export const register = async (user) => {
   try {
-    const name = user.name
+    const username = user.username
     const password = user.password
     const email = user.email
-    const response = await api.post(`/auth/register`, { name, email, password });
+    const response = await api.post(`/auth/register`, { username, email, password });
     return response.data
   } catch (error) {
     console.error('Error with register method:', error);
@@ -99,7 +103,13 @@ export const login = async (user) => {
 
     // Optional: store the access token in localStorage/sessionStorage
     const token = response.data.access_token;
+    const decoded = jwtDecode(token)
+    console.log("user token ",  response.data)
+    //const userId = response.data.user_token.userid;
+
     localStorage.setItem('token', token); // or sessionStorage.setItem()
+    localStorage.setItem('username', decoded.username)
+    localStorage.setItem('id', decoded.id)
 
     return response.data;
   } catch (error) {

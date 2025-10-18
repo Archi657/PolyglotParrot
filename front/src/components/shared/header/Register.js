@@ -75,7 +75,7 @@ export default function SignUp(props) {
     const validateInputs = () => {
         const email = document.getElementById('email');
         const password = document.getElementById('password');
-        const name = document.getElementById('name');
+        const username = document.getElementById('username');
 
         let isValid = true;
 
@@ -97,9 +97,9 @@ export default function SignUp(props) {
             setPasswordErrorMessage('');
         }
 
-        if (!name.value || name.value.length < 1) {
+        if (!username.value || username.value.length < 1) {
             setNameError(true);
-            setNameErrorMessage('Name is required.');
+            setNameErrorMessage('Username is required.');
             isValid = false;
         } else {
             setNameError(false);
@@ -116,7 +116,7 @@ export default function SignUp(props) {
 
         const data = new FormData(event.currentTarget);
         const user = {
-            name: data.get('name'),
+            username: data.get('username'),
             email: data.get('email'),
             password: data.get('password'),
         };
@@ -151,13 +151,13 @@ export default function SignUp(props) {
                         sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
                     >
                         <FormControl>
-                            <FormLabel htmlFor="name">Full name</FormLabel>
+                            <FormLabel htmlFor="username">Username</FormLabel>
                             <TextField
-                                autoComplete="name"
-                                name="name"
+                                autoComplete="username"
+                                name="username"
                                 required
                                 fullWidth
-                                id="name"
+                                id="username"
                                 placeholder="Jon Snow"
                                 error={nameError}
                                 helperText={nameErrorMessage}

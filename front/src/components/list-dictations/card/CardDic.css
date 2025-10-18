@@ -1,36 +1,117 @@
-/* Control the grid layout */
-.dictation-card {
-    height: 25rem; /* Ensures all cards have the same height */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  .dictation-card-img {
-    height: 12rem; /* Fixed image height */
-    object-fit: cover; /* Ensures images are cropped to fit */
-    border-top-left-radius: 0.25rem;
-    border-top-right-radius: 0.25rem;
-  }
-  
-  .dictation-card-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 1rem;
-  }
-  
-  .dictation-card-title {
-    font-size: 1.25rem;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 0.5rem;
-  }
-  
-  .dictation-card-text {
-    font-size: 0.9rem;
-    color: #555;
-    text-align: justify;
-    flex-grow: 1;
-  }
-  
+:root {
+  --card-height: 300px;
+  --card-width: calc(var(--card-height) / 1.5);
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3rem;
+  padding: 2rem;
+  background: #191c29;
+}
+
+.card {
+  width: var(--card-width);
+  height: var(--card-height);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  perspective: 2500px;
+  text-decoration: none;
+  color: rgb(199, 0, 249);
+  background-color: rgb(199, 0, 249);
+}
+
+.cover-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wrapper {
+  transition: all 0.5s;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.card:hover .wrapper {
+  transform: perspective(900px) translateY(-5%) rotateX(25deg);
+  box-shadow: 2px 35px 32px -8px rgba(0, 0, 0, 0.75);
+}
+
+.wrapper::before,
+.wrapper::after {
+  content: "";
+  opacity: 0;
+  width: 100%;
+  height: 80px;
+  transition: all 0.5s;
+  position: absolute;
+  left: 0;
+}
+
+.wrapper::before {
+  top: 0;
+  height: 100%;
+  background-image: linear-gradient(
+    to top,
+    transparent 46%,
+    rgba(12, 13, 19, 0.5) 68%,
+    rgba(12, 13, 19) 97%
+  );
+}
+
+.wrapper::after {
+  bottom: 0;
+  opacity: 1;
+  background-image: linear-gradient(
+    to bottom,
+    transparent 46%,
+    rgba(12, 13, 19, 0.5) 68%,
+    rgba(12, 13, 19) 97%
+  );
+}
+
+.card:hover .wrapper::before,
+.card:hover .wrapper::after {
+  opacity: 1;
+}
+
+.card:hover .wrapper::after {
+  height: 120px;
+}
+
+.title {
+  position: absolute;
+  bottom: 1rem;
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: bold;
+  z-index: 2;
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+  transition: transform 0.5s, opacity 0.5s;
+}
+
+.card:hover .title {
+  transform: translate3d(0, -50px, 100px);
+  opacity: 1;
+}
+
+.character {
+  width: 100%;
+  opacity: 0;
+  transition: all 0.5s;
+  position: absolute;
+  z-index: 1;
+}
+
+.card:hover .character {
+  opacity: 1;
+  transform: translate3d(0, -30%, 100px);
+}

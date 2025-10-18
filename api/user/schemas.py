@@ -4,7 +4,7 @@ def serialize_user(user):
     try:
         return {
             "id": str(user["_id"]),
-            "name": user.get("name", ""),
+            "username": user.get("username", ""),
             "email": user.get("email", ""),
             "password": user.get("password", ""),
             "creation": user.get("creation", 0),

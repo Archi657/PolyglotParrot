@@ -8,44 +8,41 @@ import { NavLink } from "react-router-dom";
 import Languages from './Languages';
 import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
-import { jwtDecode } from 'jwt-decode'; // ✅ correct
-
+//import { jwtDecode } from 'jwt-decode';
+import { Avatar } from "@mui/material";
 
 const Header = () => {
     const [token, setToken] = useState(localStorage.getItem("token"));
+    const [username, setUsername] = useState(localStorage.getItem("username"));
 
-    // Sync token state across tabs/windows
     useEffect(() => {
-        const handleStorageChange = () => {
-            setToken(localStorage.getItem("token"));
+        const updateFromStorage = () => {
+            const tokenFromStorage = localStorage.getItem("token");
+            const userFromStorage = localStorage.getItem("username");
+
+            setToken(tokenFromStorage);
+            setUsername(userFromStorage);
+
         };
-        window.addEventListener("storage", handleStorageChange);
+
+        updateFromStorage(); // initial load
+        window.addEventListener("storage", updateFromStorage);
+        console.log(username)
         return () => {
-            window.removeEventListener("storage", handleStorageChange);
+            window.removeEventListener("storage", updateFromStorage);
         };
+
     }, []);
 
     const handleLogout = () => {
         localStorage.removeItem("token");
+        localStorage.removeItem("username");
         setToken(null);
-    };
-
-    // Decode JWT to get user info (e.g., email)
-    const getUserEmail = (token) => {
-        try {
-            const decoded = jwtDecode(token);
-            console.log("token")
-            console.log(decoded)
-            return decoded.sub || decoded.email;
-        } catch {
-            return null;
-        }
+        setUsername("");
     };
 
     const { t } = useTranslation();
     const { home, dictations, aboutus, supportus, login, register, logout } = t("Header");
-
-    const userEmail = token ? getUserEmail(token) : null;
 
     return (
         <Navbar bg="dark" variant="dark" expand="lg">
@@ -63,14 +60,16 @@ const Header = () => {
                         <NavLink className="nav-link" to="/support-us">{supportus}</NavLink>
                     </Nav>
 
-                    {/* Right side auth buttons */}
                     {token ? (
                         <div className="d-flex align-items-center">
-                            {userEmail && (
+                            {username && (
                                 <span className="text-white me-3">
-                                    {userEmail}
+                                    {username}
                                 </span>
                             )}
+                            <NavLink to={`/profile/${encodeURIComponent(username)}`} className="me-3">
+                                <Avatar alt={username} src="https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg" />
+                            </NavLink>
                             <Button variant="outline-warning" onClick={handleLogout}>
                                 {logout || "Logout"}
                             </Button>
@@ -90,5 +89,6 @@ const Header = () => {
         </Navbar>
     );
 };
+
 
 export default Header;
