@@ -6,7 +6,7 @@ const Dictations = () => {
     const [dictations, setDictations] = useState([]);
     const getDictations = async () => {
         try {
-            const response = await api.get("/api/v1/dictations");
+            const response = await api.get("/dictations/");
             setDictations(response.data);
         } catch (error) {
             console.error('Error fetching dictations:', error);

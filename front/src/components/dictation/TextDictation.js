@@ -3,37 +3,34 @@ import "./TextDictation.css";
 
 const TextDictation = ({ onTextChange, correctedText }) => {
   const textRef = useRef(null);
-  const [showInput, setShowInput] = useState(true); // Controls input visibility
+  const [showInput, setShowInput] = useState(true);
 
   useEffect(() => {
-    if (textRef.current) {
-      if (correctedText) {
-        // Clear the actual content inside the contentEditable div
-        console.log("corrected text")
-        textRef.current.innerText = '';
-        onTextChange('');
-        setShowInput(false);
-      } else {
-        setShowInput(true);
-        textRef.current.focus();
-      }
+    if (!textRef.current) return;
+
+    if (correctedText) {
+      // Clear and show correction
+      textRef.current.innerText = "";
+      onTextChange("");
+      setShowInput(false);
+    } else {
+      setShowInput(true);
+      textRef.current.focus();
     }
   }, [correctedText]);
-  
 
   const handleInputChange = () => {
     if (textRef.current && onTextChange) {
-      const value = textRef.current.innerText.trim(); // Normalize text input
+      // Don't trim — keep spaces so it feels natural like Monkeytype
+      const value = textRef.current.innerText;
       onTextChange(value);
-      console.log('w')
     }
   };
 
   const handleKeyDown = (e) => {
-    if ((e.ctrlKey || e.metaKey) && !["a", "x", "c", "v"].includes(e.key.toLowerCase())) {
-      e.preventDefault(); // Allow only common shortcuts
-    }else{
-      console.log("meow")
+    // Only block unwanted Ctrl shortcuts
+    if ((e.ctrlKey || e.metaKey) && !["a", "x", "c"].includes(e.key.toLowerCase())) {
+      e.preventDefault();
     }
   };
 
@@ -43,12 +40,12 @@ const TextDictation = ({ onTextChange, correctedText }) => {
         <div
           ref={textRef}
           className="text-display"
-          contentEditable={true}
-          suppressContentEditableWarning={true}
+          contentEditable
+          suppressContentEditableWarning
           onInput={handleInputChange}
           onKeyDown={handleKeyDown}
-          spellCheck={false} 
-        ></div>
+          spellCheck={false}
+        />
       ) : (
         <div className="corrected-text">
           {Array.isArray(correctedText[0]) ? (
@@ -58,7 +55,7 @@ const TextDictation = ({ onTextChange, correctedText }) => {
               </span>
             ))
           ) : (
-            <span className="error-text">Invalid text data</span> // Fallback for safety
+            <span className="error-text">Invalid text data</span>
           )}
         </div>
       )}

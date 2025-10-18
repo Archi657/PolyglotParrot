@@ -14,7 +14,7 @@ const CardDic = ({ dictations }) => {
           <Card className="dictation-card">
             <Card.Img 
               variant="top" 
-              src={dictation.backdrops[0] || "holder.js/100px160"} 
+              src={dictation.bgImage || "holder.js/100px160"} 
               alt="Dictation Image" 
               className="dictation-card-img" 
             />

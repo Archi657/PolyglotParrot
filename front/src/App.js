@@ -12,6 +12,7 @@ import { getSlider } from './api/routes';
 import Footer from './components/shared/footer/Footer';
 import Register from './components/shared/header/Register';
 import Login from './components/shared/header/Login';
+import About from './components/about/About';
 function App() {
   const [slider, setSlider] = useState([]);
 
@@ -47,6 +48,7 @@ function App() {
           <Route path="/profile/:username" element={<Profile />} />
           <Route path="/register/" element={<Register />} />
           <Route path="/login/" element={<Login />} />
+          <Route path="/about-us" element={<About />} />
         </Route>
       </Routes>
       <Footer />
