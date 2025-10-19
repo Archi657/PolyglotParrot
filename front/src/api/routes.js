@@ -10,6 +10,34 @@ export const getSlider = async () => {
   }
 }
 
+// Fetch all dictations (solutions) for a given user
+export const getDictationsUser = async (id) => {
+  try {
+    const response = await api.get(`/solutions/${id}`); // or /solutions/by-username/{username} if you use username
+    const solutions = response.data;
+
+    if (!Array.isArray(solutions) || solutions.length === 0) {
+      console.log("No solutions found for this user");
+      return [];
+    }
+
+    // Map to simplified objects
+    const dictations = solutions.map(sol => ({
+      dictationID: sol.dictationID,
+      dictationTitle: sol.dictationTitle,
+      accuracy: sol.accuracy
+    }));
+
+    console.log("User dictations:", dictations);
+    return dictations;
+
+  } catch (error) {
+    console.error("Error fetching dictation details:", error);
+    throw error;
+  }
+};
+
+
 // Fetch dictation details
 export const getDictationDetails = async (id) => {
   try {

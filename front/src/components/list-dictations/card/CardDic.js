@@ -1,17 +1,15 @@
 import React from "react";
 import "./CardDic.css";
 import Emoji from "../../shared/emoji/Emoji";
+import { Link } from "react-router-dom";
 const CardDic = ({ dictations }) => {
   return (
     <div className="cards-container">
-      {dictations.map((dictation, idx) => (
-        <a
-          key={idx}
-          href="#"
-          className="card"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+      {dictations.map((dictation) => (
+        <Link key={0}
+          to={`/dictation/${dictation.id}`}
+          state={{ dictation: dictation }}
+          className="card">
           <div className="wrapper">
             <img
               src={dictation.bgImage}
@@ -21,10 +19,10 @@ const CardDic = ({ dictations }) => {
           </div>
 
           <h2 className="title"><Emoji
-                key="en"
-                emoji={dictation.language}
-                size={24}
-            /> {dictation.title}</h2>
+            key="en"
+            emoji={dictation.language}
+            size={24}
+          /> {dictation.title}</h2>
 
           {dictation.image && (
             <img
@@ -33,7 +31,7 @@ const CardDic = ({ dictations }) => {
               className="character"
             />
           )}
-        </a>
+        </Link>
       ))}
     </div>
   );

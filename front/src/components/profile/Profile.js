@@ -1,9 +1,11 @@
 /* eslint-disable */
 import { useState, useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Avatar, Box, Stack, Typography } from "@mui/material";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { dataset, valueFormatter } from "./data";
+
+import { getDictationsUser } from "../../api/routes"; 
 import Emoji from "../shared/emoji/Emoji"
 
 const Profile = () => {
@@ -15,8 +17,8 @@ const Profile = () => {
 
     const [user, setUser] = useState({});
     const { username } = useParams();
-    const location = useLocation();
-
+    const [dictations, setDictations] = useState([]);
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -36,11 +38,20 @@ const Profile = () => {
                     ],
                 };
                 setUser(mockUser);
+
+                // REAL
+
+                setLoading(true)
+                const data = await getDictationsUser(username)
+                //console,log(username + " dictations " + data)
+                setDictations(data || [])
             } catch (error) {
-                console.error("Error fetching user:", error);
+                console.error("Error fetching dictations for user:", error);
+            }finally { 
+              setLoading(false)
             }
         };
-        fetchData();
+        if (username) fetchData();
     }, [username]);
 
     return (
@@ -145,35 +156,36 @@ const Profile = () => {
                 />
             </Box>
 
-            {/* Latest Dictations */}
-            <Box sx={{ width: "100%", maxWidth: 700 }}>
-                <Typography variant="h6" mb={2} color="white">
-                    Latest Dictations
-                </Typography>
-                <Stack spacing={1.5}>
-                    {user.latestDictations?.map((d) => (
-                        <Box
-                            key={d.id}
-                            sx={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                p: 2,
-                                borderRadius: 2,
-                                bgcolor: "#1e1e1e", // Card bg
-                                color: "white",
-                                transition: "0.3s",
-                                "&:hover": { bgcolor: "#2c2c2c" },
-                            }}
-                        >
-                            <Typography>{d.title}</Typography>
-                            <Typography variant="body2" color="#9e9e9e">
-                                {d.date}
-                            </Typography>
-                        </Box>
-                    ))}
-                </Stack>
+            {loading ? (
+        <Typography color="#9e9e9e">Loading dictations...</Typography>
+      ) : Array.isArray(dictations) && dictations.length > 0 ? (
+        dictations.map((d, index) => (
+          <Box
+            key={index}
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              p: 2,
+              borderRadius: 2,
+              bgcolor: "#1e1e1e",
+              mb: 2,
+              transition: "0.3s",
+              "&:hover": { bgcolor: "#2c2c2c" },
+            }}
+          >
+            <Box>
+              <Typography variant="h6">{d.dictationTitle}</Typography>
+              <Typography variant="body2" color="#9e9e9e">
+                Accuracy: {d.accuracy}%
+              </Typography>
             </Box>
-        </Box>
+          </Box>
+        ))
+      ) : (
+        <Typography color="#9e9e9e">No dictations found</Typography>
+      )}
+    </Box>
     );
 };
 
