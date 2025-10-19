@@ -77,20 +77,24 @@ const Dictation = () => {
                 </div>
 
                 <div className="dictation-audio">
-                    {audioFiles.length > 0 ? (
-                        audioFiles.map(({ label, url }) => (
-                            <div key={label} className="audio-section">
-                                <p>{label}</p>
-                                <AudioPlayer audioFile={url} />
-                            </div>
-                        ))
-                    ) : (
-                        <div>
-                            <p>Loading audios</p>
-                            <CircularProgress size="30px" />
-                        </div>
-                    )}
-                </div>
+  <h3 style={{ textAlign: "center", marginBottom: "10px" }}>Audio Clips</h3>
+  <div className="audio-grid">
+    {audioFiles.length > 0 ? (
+      audioFiles.map(({ label, url }) => (
+        <div key={label} className="audio-item">
+          <AudioPlayer audioFile={url} />
+          <p className="audio-label">{label}</p>
+        </div>
+      ))
+    ) : (
+      <div style={{ textAlign: "center", marginTop: "20px" }}>
+        <p>Loading audios...</p>
+        <CircularProgress size="30px" />
+      </div>
+    )}
+  </div>
+</div>
+
             </div>
         </>
     );

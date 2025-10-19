@@ -48,7 +48,7 @@ const Header = () => {
         <Navbar bg="dark" variant="dark" expand="lg">
             <Container fluid>
                 <Navbar.Brand style={{ color: 'gold' }}>
-                    <FontAwesomeIcon icon={faPencil} /> Mingui
+                    <FontAwesomeIcon icon={faPencil} /> Parroglot
                 </Navbar.Brand>
                 <Languages />
                 <Navbar.Toggle aria-controls="navbarScroll" />
