@@ -104,6 +104,27 @@ export const getDictationAudios = async (audios) => {
   }
 };
 
+export const getDictationAudio = async (audio) => {
+  try {
+    const response = await api.get(`/dictations/audio/${audio.file_id}`, {
+      responseType: 'blob',
+    });
+
+    const audioUrl = URL.createObjectURL(response.data);
+
+    return {
+      label: audio.label,
+      url: audioUrl,
+    };
+  } catch (error) {
+    console.error('Error fetching audio:', audio.file_id, error);
+    return {
+      label: audio.label,
+      url: null, // fallback
+    };
+  }
+};
+
 export const register = async (user) => {
   try {
     const username = user.username

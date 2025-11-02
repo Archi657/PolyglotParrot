@@ -4,7 +4,16 @@ import { useTranslation } from 'react-i18next';
 
 const HeaderDictation = ({ title, language, image, difficulty }) => {
   const { t } = useTranslation();
-  const { Diclanguage } = t("Dictation Header");
+  const { Diclanguage, Dicdiff, Dichard, Dicmedium, Diceasy } = t("Dictation Header");
+
+  const difficultyLabel =
+    difficulty === "easy"
+      ? Diceasy
+      : difficulty === "medium"
+      ? Dicmedium
+      : difficulty === "hard"
+      ? Dichard
+      : difficulty;
 
   return (
     <div style={{
@@ -31,7 +40,7 @@ const HeaderDictation = ({ title, language, image, difficulty }) => {
           {Diclanguage} :{" "}
           <Emoji key="en" emoji={language} size={24} />
         </p>
-        <p>{difficulty}</p>
+        <p>{Dicdiff} : {difficultyLabel}</p>
       </div>
     </div>
   );
