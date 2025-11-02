@@ -19,7 +19,7 @@ const Dictation = () => {
   const { id } = useParams();
   const location = useLocation();
   const { t } = useTranslation();
-  const { audio_header, result } = t("Dictation");
+  const { audio_header, result, send } = t("Dictation");
 
   const fetchStarted = useRef(false);
 
@@ -69,7 +69,7 @@ const Dictation = () => {
 
           <ConfirmButton
             actionType="sendDictation"
-            buttonText="Send"
+            buttonText={send}
             dictation={dictation}
             typedText={typedText}
             setCorrectedText={setCorrectedText}

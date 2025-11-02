@@ -21,7 +21,8 @@
     "Dictation": {
         "audios_loading": "Loading audios...",
         "audio_header": "Audio Clips",
-        "result": "Result"
+        "result": "Result",
+        "send": "Send"
     },
     "Options":{
         "yes": "yes",

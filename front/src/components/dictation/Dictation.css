@@ -1,45 +1,49 @@
-  .dictation-container {
-    display: flex;
-    flex-wrap: wrap;
-    background-color: #222;
-    color: rgb(255, 255, 255);
-    margin-top: 10px;
-    margin-left: 85px;
-    margin-right: 85px;
-    min-height: calc(100vh - 10px); /* Ensures it stretches to the bottom */
-    box-sizing: border-box; /* Ensures padding/margin doesn't break layout */
-  }
+.dictation-container {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #222;
+  color: #fff;
+  margin: 10px 85px 0 85px;
+  /* remove min-height to avoid forced large height */
+  box-sizing: border-box;
+}
 
-  .dictation-header{
-    background-color: #222;
-    padding: 20px;
-    color: rgba(255, 255, 255, 0.87);
-    margin-left: 85px;
-    margin-right: 85px;
-  }
-  .dictation-box {
-    flex: 1;
-    min-width: 800px; /* Adjust this value based on your minimum desired width */
-    margin: 30px; /* Add some spacing between items */
-  }
 
-  .dictation-box button {
-    padding: 10px;
-    margin: 5px;
-  }
+/* Header styling */
+.dictation-header {
+  background-color: #222;
+  padding: 20px;
+  color: rgba(255, 255, 255, 0.87);
+  margin: 0 85px;
+}
 
+/* Text area */
+.dictation-box {
+  flex: 1 1 500px; /* Grow, shrink, minimum width */
+  margin: 30px;
+  min-width: 300px; /* Ensures text doesn't get too narrow on small screens */
+}
+
+/* Buttons inside text area */
+.dictation-box button {
+  padding: 10px;
+  margin: 5px;
+}
+
+/* Audio grid */
 .audio-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* exactly 4 per row */
-  gap: 20px; /* spacing between circles */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
   justify-items: center;
   align-items: center;
   padding: 20px;
   width: 100%;
-  max-width: 700px; /* keep it visually centered */
-  margin: 0 auto; /* center horizontally */
+  max-width: 700px;
+  margin: 0 auto;
 }
 
+/* Audio items */
 .audio-item {
   display: flex;
   flex-direction: column;
@@ -53,23 +57,56 @@
   text-align: center;
 }
 
-
- .dictation-header-score {
+/* Score display */
+.dictation-header-score {
   font-size: 1.8rem;
   font-weight: bold;
-  margin: 20px 0 10px 0; /* space above and below */
-  text-align: center; /* centered in the container */
+  margin: 20px 0 10px 0;
+  text-align: center;
   color: #fff;
 }
 
 .dictation-score {
-  font-size: 1.4rem; /* increase readability */
+  font-size: 1.4rem;
   font-weight: 600;
-  text-align: center; /* center the score text */
-  background-color: #333; /* slightly different than #222 to stand out */
+  text-align: center;
+  background-color: #333;
   padding: 10px 20px;
-  border-radius: 8px; /* rounded edges */
-  display: inline-block; /* shrink background around text */
-  margin: 0 auto; /* center horizontally */
+  border-radius: 8px;
+  display: inline-block;
+  margin: 0 auto;
   color: #fff;
+}
+
+/* ===========================
+   Responsive adjustments
+============================ */
+@media (max-width: 1200px) {
+  .dictation-container {
+    flex-direction: column; /* stack text and audio vertically */
+    margin: 10px 20px 0 20px; /* reduce side margins */
+  }
+
+  .dictation-header {
+    margin: 0 20px;
+  }
+
+  .dictation-box {
+    margin: 20px 0;
+  }
+
+  .audio-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 per row on medium screens */
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .audio-grid {
+    grid-template-columns: 1fr; /* 1 per row on small screens */
+  }
+
+  .dictation-box {
+    min-width: 100%; /* text takes full width */
+  }
 }

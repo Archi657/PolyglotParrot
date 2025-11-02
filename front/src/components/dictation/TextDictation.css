@@ -1,53 +1,43 @@
 .text-container {
   width: 100%;
-  min-height: 200px;       /* Ensure you see the box even if empty */
-  max-height: 400px;
+  min-height: 300px;       /* taller box */
+  max-height: 500px;      /* allow more content without overflow */
+  height: 400px;
   background-color: #1e1e1e;
   border: 1px solid #333;
   border-radius: 8px;
-  padding: 16px;
+  padding: 20px;           /* more padding for comfort */
   overflow-y: auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: column;   /* ensure text stacks vertically */
   box-sizing: border-box;
   cursor: text;
 }
 
 .text-display {
   flex: 1;
-  min-height: 1.5rem;     /* Important for visibility of empty line */
+  min-height: 2rem;        /* bigger initial line */
   font-family: monospace;
-  font-size: 1.2rem;
-  line-height: 1.6rem;
+  font-size: 1.6rem;       /* bigger font size */
+  line-height: 2.2rem;     /* taller line spacing */
   color: #ffffff;
   outline: none;
   border: none;
   background: transparent;
   white-space: pre-wrap;
   word-break: break-word;
-  caret-color: #9fbe10;
+  caret-color: #ffe100;
 }
 
-
-/* Optional — Remove the fake caret, since contentEditable already has one */
-/*
-.text-display::after {
-  content: "";
-  display: inline-block;
-  width: 8px;
-  height: 1.4rem;
-  background-color: #9fbe10;
-  animation: blink 0.8s steps(2, start) infinite;
-}
-*/
-
+/* Corrected text display */
 .corrected-text {
-  font-size: 1.2rem;
-  line-height: 1.6rem;
+  font-size: 1.6rem;       /* match editable text */
+  line-height: 2.2rem;
   font-family: monospace;
   color: #fff;
 }
 
+/* Styling for correct/incorrect words */
 .correct {
   color: #8ae234;
   font-weight: bold;
@@ -61,4 +51,23 @@
 .extra {
   color: #babdb6;
   font-style: italic;
+}
+
+.expected {
+  color: #005eff;
+  font-style: italic;
+}
+
+/* Optional: scrollbar style */
+.text-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.text-container::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 5px;
+}
+
+.text-container::-webkit-scrollbar-track {
+  background-color: #1e1e1e;
 }
