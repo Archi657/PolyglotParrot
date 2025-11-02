@@ -13,7 +13,7 @@ const Hero = ({ slider }) => {
         {slider.map((dictation) => (
           <Link key={0}
             to={`/dictation/${dictation.id}`}
-            state={{ dictation: dictation }}>
+            state={{ ddictation: dictation }}>
             <Paper key={dictation.id}>
               <div className="dictation-card-container">
                 <div className="dictation-card" style={{ "--img": `url(${dictation.bgImage})` }}>

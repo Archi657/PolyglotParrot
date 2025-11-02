@@ -15,6 +15,11 @@
         "Diclanguage": "Language",
         "Diclanguages": "Avaliable in these languages"
     },
+    "Dictation": {
+        "audios_loading": "Loading audios...",
+        "audio_header": "Audio Clips",
+        "result": "Result"
+    },
     "Options":{
         "yes": "yes",
         "no": "no"

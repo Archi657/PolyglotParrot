@@ -28,7 +28,7 @@ export const getDictationsUser = async (id) => {
       accuracy: sol.accuracy
     }));
 
-    console.log("User dictations:", dictations);
+    //console.log("User dictations:", dictations);
     return dictations;
 
   } catch (error) {
@@ -48,8 +48,12 @@ export const getDictationDetails = async (id) => {
       title: response.data.title,
       text: response.data.text,
       language: response.data.language,
-      //audio
+      difficulty: response.data.difficulty,
+      image: response.data.image,
+      audios: response.data.audios
     };
+
+    //console.log("dif " + response.data.difficulty)
 
     return dictation;
   } catch (error) {
@@ -132,7 +136,7 @@ export const login = async (user) => {
     // Optional: store the access token in localStorage/sessionStorage
     const token = response.data.access_token;
     const decoded = jwtDecode(token)
-    console.log("user token ",  response.data)
+    //console.log("user token ",  response.data)
     //const userId = response.data.user_token.userid;
 
     localStorage.setItem('token', token); // or sessionStorage.setItem()

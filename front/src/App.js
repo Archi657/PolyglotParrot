@@ -20,7 +20,7 @@ function App() {
     const fetchSlider = async () => {
       try {
         const response = await getSlider();
-        console.log(response)
+        //console.log(response)
         setSlider(response.data);
       } catch (error) {
         console.error('Error fetching dictations:', error);
@@ -31,7 +31,7 @@ function App() {
 
   //debug
   useEffect(() => {
-    console.log(slider); // Side effect after dictations state update
+    //console.log(slider); // Side effect after dictations state update
   }, [slider]); // Run this effect whenever the dictations state changes
 
 

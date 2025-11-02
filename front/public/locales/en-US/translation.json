@@ -13,7 +13,10 @@
     },
     "Dictation Header": {
         "Diclanguage": "Language",
-        "Diclanguages": "Avaliable in these languages"
+        "Dicdiff": "Difficulty",
+        "Dichard": "Hard",
+        "Dicmedium": "Medium",
+        "Diceasy": "Easy"
     },
     "Options":{
         "yes": "yes",

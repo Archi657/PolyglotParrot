@@ -2,6 +2,7 @@ import './Dictation.css';
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 
+import { useTranslation } from 'react-i18next';
 import TextDictation from './TextDictation';
 import AudioPlayer from './AudioPlayer';
 import HeaderDictation from './HeaderDictation';
@@ -21,6 +22,9 @@ const Dictation = () => {
     const { id } = useParams();
     const location = useLocation();
 
+    const { t } = useTranslation();
+    const { audios_loading, audio_header, result } = t("Dictation");
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -31,7 +35,7 @@ const Dictation = () => {
                 }
 
                 setDictation(dictationData);
-
+                console.log(dictationData.audios)
                 const urls = await getDictationAudios(dictationData.audios);
                 setAudioFiles(urls);
             } catch (error) {
@@ -49,7 +53,7 @@ const Dictation = () => {
     return (
         <>
             <div className="dictation-header">
-                <HeaderDictation title={dictation.title} language={dictation.language} />
+                <HeaderDictation title={dictation.title} language={dictation.language} image={dictation.image} difficulty={dictation.difficulty} />
             </div>
 
             <div className="dictation-container">
@@ -67,33 +71,33 @@ const Dictation = () => {
                     />
                     {correctedText && (
                         <>
-                        <div className="">
-                            <h1 className='dictation-header-score'>Resultado</h1>
-                            <p className='dictation-score'>{correctedText[1]}%</p>
-                        </div>
-                            
+                            <div className="">
+                                <h1 className='dictation-header-score'>{result}</h1>
+                                <p className='dictation-score'>{correctedText[1]}%</p>
+                            </div>
+
                         </>
                     )}
                 </div>
 
                 <div className="dictation-audio">
-  <h3 style={{ textAlign: "center", marginBottom: "10px" }}>Audio Clips</h3>
-  <div className="audio-grid">
-    {audioFiles.length > 0 ? (
-      audioFiles.map(({ label, url }) => (
-        <div key={label} className="audio-item">
-          <AudioPlayer audioFile={url} />
-          <p className="audio-label">{label}</p>
-        </div>
-      ))
-    ) : (
-      <div style={{ textAlign: "center", marginTop: "20px" }}>
-        <p>Loading audios...</p>
-        <CircularProgress size="30px" />
-      </div>
-    )}
-  </div>
-</div>
+                    <h3 style={{ textAlign: "center", marginBottom: "10px" }}>{audio_header}</h3>
+                    <div className="audio-grid">
+                        {audioFiles.length > 0 ? (
+                            audioFiles.map(({ label, url }) => (
+                                <div key={label} className="audio-item">
+                                    <AudioPlayer audioFile={url} />
+                                    <p className="audio-label">{label}</p>
+                                </div>
+                            ))
+                        ) : (
+                            <div style={{ textAlign: "center", marginTop: "20px" }}>
+                                <p>{audios_loading}</p>
+                                <CircularProgress size="30px" />
+                            </div>
+                        )}
+                    </div>
+                </div>
 
             </div>
         </>

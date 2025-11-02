@@ -18,14 +18,14 @@ const Modal = ({ dictation, setLanguage, languageOld }) => {
     const { yes, no } = t("Options")
 
     const selectLanguage = () => {
-        console.log('change modal yes', location.state.languageChange)
+        //console.log('change modal yes', location.state.languageChange)
         setLanguage(location.state.languageChange);
         setModalOpen(false);
         navigate(`/dictation/${id}`, { state: { language: location.state.languageChange } });
     };
 
     const selecOld = () => {
-        console.log('change modal no', languageOld)
+        //console.log('change modal no', languageOld)
         setLanguage(location.state.languageOld);
         setModalOpen(false);
         navigate(`/dictation/${id}`, { state: { language: location.state.languageOld } });
