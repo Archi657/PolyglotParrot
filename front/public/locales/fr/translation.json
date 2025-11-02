@@ -1,22 +1,31 @@
 {
-    "Header": {
-        "home" : "Menu",
-        "dictations" : "Dictées",
-        "aboutus" : "Sur nous",
-        "supportus" : "Nous Soutenir",
-        "login" : "Login",
-        "register" : "Registrer"
-    },
-    "Home Description": "Sélectionnez une dictée à commencer. Un champ de texte et des clips audio apparaissent. Écoutez attentivement chaque clip audio et transcrivez ce que vous entendez le plus fidèlement possible. Une fois que vous avez terminé, vous pouvez consulter vos résultats.",
-    "Language Change":{
-        "description" : "Êtes-vous sûr de vouloir changer de langue ?"
-    },
-    "Dictation Header": {
-        "Diclanguage": "Language",
-        "Diclanguages": "Disponible sur ces langues"
-    },
-    "Options":{
-        "yes": "Oui",
-        "no": "Non"
-    }
+  "Header": {
+    "home": "Menu",
+    "dictations": "Dictées",
+    "aboutus": "À propos de nous",
+    "supportus": "Nous soutenir",
+    "login": "Connexion",
+    "register": "S’inscrire"
+  },
+  "Home Description": "Sélectionnez une dictée pour commencer. Un champ de texte et des clips audio apparaîtront. Écoutez attentivement chaque clip audio et transcrivez ce que vous entendez le plus fidèlement possible. Une fois terminé, vous pourrez consulter vos résultats.",
+  "Language Change": {
+    "description": "Êtes-vous sûr de vouloir changer de langue ?"
+  },
+  "Dictation Header": {
+    "Diclanguage": "Langue",
+    "Dicdiff": "Difficulté",
+    "Dichard": "Difficile",
+    "Dicmedium": "Moyenne",
+    "Diceasy": "Facile",
+    "Diclanguages": "Disponible dans ces langues"
+  },
+  "Dictation": {
+    "audios_loading": "Chargement des audios...",
+    "audio_header": "Clips audio",
+    "result": "Résultat"
+  },
+  "Options": {
+    "yes": "Oui",
+    "no": "Non"
+  }
 }

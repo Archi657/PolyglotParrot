@@ -10,6 +10,34 @@ export const getSlider = async () => {
   }
 }
 
+// Fetch all dictations (solutions) for a given user
+export const getDictationsUser = async (id) => {
+  try {
+    const response = await api.get(`/solutions/${id}`); // or /solutions/by-username/{username} if you use username
+    const solutions = response.data;
+
+    if (!Array.isArray(solutions) || solutions.length === 0) {
+      console.log("No solutions found for this user");
+      return [];
+    }
+
+    // Map to simplified objects
+    const dictations = solutions.map(sol => ({
+      dictationID: sol.dictationID,
+      dictationTitle: sol.dictationTitle,
+      accuracy: sol.accuracy
+    }));
+
+    //console.log("User dictations:", dictations);
+    return dictations;
+
+  } catch (error) {
+    console.error("Error fetching dictation details:", error);
+    throw error;
+  }
+};
+
+
 // Fetch dictation details
 export const getDictationDetails = async (id) => {
   try {
@@ -20,8 +48,12 @@ export const getDictationDetails = async (id) => {
       title: response.data.title,
       text: response.data.text,
       language: response.data.language,
-      //audio
+      difficulty: response.data.difficulty,
+      image: response.data.image,
+      audios: response.data.audios
     };
+
+    //console.log("dif " + response.data.difficulty)
 
     return dictation;
   } catch (error) {
@@ -72,6 +104,27 @@ export const getDictationAudios = async (audios) => {
   }
 };
 
+export const getDictationAudio = async (audio) => {
+  try {
+    const response = await api.get(`/dictations/audio/${audio.file_id}`, {
+      responseType: 'blob',
+    });
+
+    const audioUrl = URL.createObjectURL(response.data);
+
+    return {
+      label: audio.label,
+      url: audioUrl,
+    };
+  } catch (error) {
+    console.error('Error fetching audio:', audio.file_id, error);
+    return {
+      label: audio.label,
+      url: null, // fallback
+    };
+  }
+};
+
 export const register = async (user) => {
   try {
     const username = user.username
@@ -104,7 +157,7 @@ export const login = async (user) => {
     // Optional: store the access token in localStorage/sessionStorage
     const token = response.data.access_token;
     const decoded = jwtDecode(token)
-    console.log("user token ",  response.data)
+    //console.log("user token ",  response.data)
     //const userId = response.data.user_token.userid;
 
     localStorage.setItem('token', token); // or sessionStorage.setItem()

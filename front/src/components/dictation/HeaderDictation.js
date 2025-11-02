@@ -2,22 +2,48 @@ import React from "react";
 import Emoji from "../shared/emoji/Emoji";
 import { useTranslation } from 'react-i18next';
 
-const HeaderDictation = ({ title, language }) => {
+const HeaderDictation = ({ title, language, image, difficulty }) => {
+  const { t } = useTranslation();
+  const { Diclanguage, Dicdiff, Dichard, Dicmedium, Diceasy } = t("Dictation Header");
 
-    const { t } = useTranslation();
-    const { Diclanguage } = t("Dictation Header")
+  const difficultyLabel =
+    difficulty === "easy"
+      ? Diceasy
+      : difficulty === "medium"
+      ? Dicmedium
+      : difficulty === "hard"
+      ? Dichard
+      : difficulty;
 
-    return (
-        <>
-            <h2> {title}</h2>
-            <p>{Diclanguage} : <Emoji
-                key="en"
-                emoji={language}
-                size={24}
-            />
-            </p>
-        </>
-    )
-}
+  return (
+    <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "1rem" // space between image and text
+    }}>
+      {image && (
+        <img
+          src={image}
+          alt={title}
+          style={{
+            width: "80px",
+            height: "80px",
+            objectFit: "cover",
+            borderRadius: "12px",
+          }}
+        />
+      )}
 
-export default HeaderDictation
+      <div>
+        <h2>{title}</h2>
+        <p>
+          {Diclanguage} :{" "}
+          <Emoji key="en" emoji={language} size={24} />
+        </p>
+        <p>{Dicdiff} : {difficultyLabel}</p>
+      </div>
+    </div>
+  );
+};
+
+export default HeaderDictation;

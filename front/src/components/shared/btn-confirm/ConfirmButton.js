@@ -33,7 +33,7 @@ const ConfirmButton = ({ actionType, buttonText, dictation, typedText, setCorrec
       // typedText
       const userID = localStorage.getItem("id")
       const response = await postDictation(userID, dictation, typedText);
-      console.log("Response from backend:", response);
+      //console.log("Response from backend:", response);
       if (response?.result) {
         setCorrectedText(response.result);
         console.log("corrected text : ", response.result)

@@ -1,0 +1,57 @@
+.audio-circle {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #f2f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.audio-circle:hover {
+  transform: scale(1.1);
+  background-color: #dcdcdc;
+}
+
+/* Play triangle */
+.triangle {
+  width: 0;
+  height: 0;
+  border-left: 16px solid #4beade;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  transition: all 0.2s ease;
+}
+
+/* Pause icon (two rectangles) */
+.triangle.pause {
+  border: none;
+  width: 12px;
+  height: 18px;
+  background: linear-gradient(
+    to right,
+    #4beade 40%,
+    transparent 40%,
+    transparent 60%,
+    #4beade 60%
+  );
+}
+
+/* Animation (optional) */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.audio-circle.playing {
+  animation: rotate 1.5s linear infinite;
+}

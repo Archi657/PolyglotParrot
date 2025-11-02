@@ -19,7 +19,7 @@ const Dictations = () => {
 
     //debug
     useEffect(() => {
-        console.log(dictations); // Side effect after dictations state update
+        //console.log(dictations); // Side effect after dictations state update
     }, [dictations]); // Run this effect whenever the dictations state changes
 
     return (

@@ -3,7 +3,7 @@ from typing import Callable, Type
 from bson.objectid import ObjectId
 from datetime import datetime
 
-from db.configurations import solution_collection
+from db.configurations import solution_collection, user_collection
 
 from solution.models import SolutionCreate, SolutionInput
 from solution.schemas import serialization_solution
@@ -42,9 +42,15 @@ async def solve(data: SolutionInput):
             raise HTTPException(status_code=500, detail=f"Some error occurred: {e}")
 
 # Filter per language could be an option, but filter in the front-end maybe is better
-@solution_router.get("/{user_id}")
-async def get_by_id(user_id: str):
+@solution_router.get("/{username}")
+async def get_by_id(username: str):
     try:
+        user_doc = user_collection.find_one({"username": username})
+
+        if not user_doc:
+            raise HTTPException(status_code=404, detail=f"User '{username}' not found")
+        user_id = str(user_doc["_id"])
+        
         data = collection.find({"userID": user_id })
         solutions = [serialization_solution(doc) for doc in data]
 

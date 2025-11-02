@@ -13,7 +13,16 @@
     },
     "Dictation Header": {
         "Diclanguage": "Language",
-        "Diclanguages": "Avaliable in these languages"
+        "Dicdiff": "Difficulty",
+        "Dichard": "Hard",
+        "Dicmedium": "Medium",
+        "Diceasy": "Easy"
+    },
+    "Dictation": {
+        "audios_loading": "Loading audios...",
+        "audio_header": "Audio Clips",
+        "result": "Result",
+        "send": "Send"
     },
     "Options":{
         "yes": "yes",

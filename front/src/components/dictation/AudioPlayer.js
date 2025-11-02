@@ -1,19 +1,28 @@
-import React from "react";
-import { Container } from "react-bootstrap";
-import CircularProgress from '@mui/material/CircularProgress';
+// AudioPlayerCircle.jsx
+import React, { useRef, useState } from "react";
+import "./AudioPlayerCircle.css";
 
 const AudioPlayer = ({ audioFile }) => {
+  const audioRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const togglePlay = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (isPlaying) {
+      audio.pause();
+    } else {
+      audio.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
   return (
-    <Container className="mt-3">
-      {audioFile ? (
-        <audio controls className="w-100">
-          <source src={audioFile} type="audio/mpeg" />
-          Your browser does not support the audio element.
-        </audio>
-      ) : (
-        <CircularProgress color="secondary" />
-      )}
-    </Container>
+    <div className="audio-circle" onClick={togglePlay}>
+      <div className={`triangle ${isPlaying ? "pause" : ""}`}></div>
+      <audio ref={audioRef} src={audioFile} preload="auto" />
+    </div>
   );
 };
 

@@ -12,6 +12,7 @@ class DictationCreate(BaseModel):  # for POST
     language: str
     image: str
     bgImage: str
+    difficulty: str
     audios: List[AudioRef] = []
     is_deleted: bool = False
     updated_at: int = Field(default_factory=lambda: int(datetime.timestamp(datetime.now())))
@@ -23,4 +24,5 @@ class DictationUpdate(BaseModel):  # for PUT/PATCH
     language: Optional[str] = None
     image: Optional[str] = None
     bgImage: Optional[str] = None
+    difficulty: Optional[str] = None
     audios: Optional[List[AudioRef]] = None
