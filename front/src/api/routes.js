@@ -1,5 +1,6 @@
 import api from './axiosConfig';
 import { jwtDecode } from 'jwt-decode';
+
 // can be improved to receive less items. maybe keep random?
 export const getSlider = async () => {
   try {
@@ -70,7 +71,7 @@ export const postDictation = async (userID, dictation, typedText) => {
     const dictationID = dictation.id
     const dictationTitle = dictation.title
     const dictationText = dictation.text
-    const response = await api.post(`/solutions/`, { userID, dictationID, dictationTitle, dictationText, typedText });
+    const response = await api.post(`/solutions/`, { userID, dictationID, dictationTitle, typedText, dictationText });
     return response.data
   } catch (error) {
     console.error('Error fetching dictation details:', error);
@@ -131,14 +132,10 @@ export const getSolution = async (solutionId) => {
     //console.log("Fetching solutionId:", solutionId);
 
     const response = await api.get(`/solutions/get/${solutionId}`);
-
-    // Axios automatically throws for non-2xx statuses,
-    // so no need to check response.ok
     const solutionData = response.data;
 
     //console.log("Full solution object:", solutionData);
     //console.log("Word-level solution array:", solutionData.solution);
-
     return solutionData;
 
   } catch (err) {

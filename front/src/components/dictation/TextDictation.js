@@ -9,6 +9,7 @@ const TextDictation = ({ onTextChange, correctedText }) => {
     if (!textRef.current) return;
 
     if (correctedText) {
+      console.log(correctedText)
       // Clear and show correction
       textRef.current.innerText = "";
       onTextChange("");
@@ -33,9 +34,9 @@ const TextDictation = ({ onTextChange, correctedText }) => {
       //return; // stop further handling
     }
     // Only block unwanted Ctrl shortcuts
-    if ((e.ctrlKey || e.metaKey) && !["a", "x", "c"].includes(e.key.toLowerCase())) {
+    /*if ((e.ctrlKey || e.metaKey) && !["a", "x", "c"].includes(e.key.toLowerCase())) {
       e.preventDefault();
-    }
+  }*/
   };
 
   return (

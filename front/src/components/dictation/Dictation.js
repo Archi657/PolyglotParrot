@@ -19,6 +19,7 @@ const Dictation = () => {
 
   const { id } = useParams();
   const location = useLocation();
+
   const { t } = useTranslation();
   const { audio_header, result, send } = t("Dictation");
 
@@ -34,11 +35,27 @@ const Dictation = () => {
         setDictation(dictationData);
 
         // progressive loading of audios
-        for (const audio of dictationData.audios) {
-          const audioObj = await getDictationAudio(audio); // fetch single audio
-          setAudioFiles(prev => [...prev, audioObj]);      // add only once
-          await new Promise(resolve => setTimeout(resolve, 100)); // optional delay
+        if (location.state?.solution) {
+          setCorrectedText([location.state.solution.solution]); // wrap in array to match TextDictation format
+          setTypedText(''); // clear typed text since we are viewing old solution
+        } else {
+          for (const audio of dictationData.audios) {
+            const audioObj = await getDictationAudio(audio); // fetch single audio
+            setAudioFiles(prev => [...prev, audioObj]);      // add only once
+            await new Promise(resolve => setTimeout(resolve, 100)); // optional delay
+          }
+
+
+
+          // NEW: handle solution passed via state
+          if (location.state?.solution) {
+            
+            setCorrectedText([location.state.solution.solution]); // wrap in array to match TextDictation format
+            console.log(correctedText)
+            setTypedText(''); // clear typed text since we are viewing old solution
+          }
         }
+
 
       } catch (error) {
         console.error('Error fetching dictation or audio:', error);
@@ -68,6 +85,7 @@ const Dictation = () => {
             correctedText={correctedText}
           />
 
+          {!correctedText && (
           <ConfirmButton
             actionType="sendDictation"
             buttonText={send}
@@ -75,32 +93,35 @@ const Dictation = () => {
             typedText={typedText}
             setCorrectedText={setCorrectedText}
           />
-
+          )}
           {correctedText && (
             <div>
               <h1 className='dictation-header-score'>{result}</h1>
-              <p className='dictation-score'>{correctedText[1]}%</p>
+              <p className='dictation-score'>{correctedText[0]?.length ? correctedText[1] : ''}%</p>
             </div>
           )}
         </div>
 
-        <div className="dictation-audio">
-          <h3 style={{ textAlign: "center", marginBottom: "10px" }}>{audio_header}</h3>
-          <div className="audio-grid">
-            {audioFiles.map(({ label, url, loading }) => (
-              <div key={label} className="audio-item">
-                {loading ? (
-                  <div className="audio-skeleton"></div>
-                ) : (
-                  <>
-                    <AudioPlayer audioFile={url} />
-                    <p className="audio-label">{label}</p>
-                  </>
-                )}
-              </div>
-            ))}
-          </div>
+        {!correctedText && (
+  <div className="dictation-audio">
+    <h3 style={{ textAlign: "center", marginBottom: "10px" }}>{audio_header}</h3>
+    <div className="audio-grid">
+      {audioFiles.map(({ label, url, loading }) => (
+        <div key={label} className="audio-item">
+          {loading ? (
+            <div className="audio-skeleton"></div>
+          ) : (
+            <>
+              <AudioPlayer audioFile={url} />
+              <p className="audio-label">{label}</p>
+            </>
+          )}
         </div>
+      ))}
+    </div>
+  </div>
+)}
+
       </div>
     </>
   );

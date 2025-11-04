@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Avatar, Box, Stack, Typography } from "@mui/material";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { dataset, valueFormatter } from "./data";
@@ -9,6 +9,8 @@ import Emoji from "../shared/emoji/Emoji";
 import "./Profile.css"; // ✅ import the CSS file
 import { getSolution } from "../../api/routes";
 const Profile = () => {
+
+  const navigate = useNavigate()
   const chartSetting = {
     xAxis: [{ label: "Dictations" }],
     height: 300,
@@ -19,6 +21,14 @@ const Profile = () => {
   const { username } = useParams();
   const [dictations, setDictations] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const handleViewSolution = async (solutionId) => {
+  const solutionData = await getSolution(solutionId);
+
+  if (solutionData) {
+    navigate(`/dictation/${solutionData.dictationID}`, { state: { solution: solutionData } });
+  }
+};
 
   useEffect(() => {
     const fetchData = async () => {
@@ -190,7 +200,7 @@ const Profile = () => {
           <Box 
       key={index} 
       className="dictation-card" 
-      onClick={() => getSolution(d.id)}
+      onClick={() => handleViewSolution(d.id)}
       style={{ cursor: "pointer" }}
     >
       <Box>

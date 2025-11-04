@@ -26,7 +26,7 @@ async def solve(data: SolutionInput):
         if not data.typedText or not data.dictationText:
             raise HTTPException(status_code=400, detail="Both typedText and dictationText are required.")
             
-        comparison_result = compare_texts(data.typedText, data.dictationText)
+        comparison_result = compare_texts(data.dictationText, data.typedText )
         solution = SolutionCreate(
             userID=data.userID,
             dictationID=data.dictationID,

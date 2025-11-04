@@ -1,86 +1,97 @@
 import spacy
 from difflib import SequenceMatcher
-import re
 
-nlp = spacy.load("en_core_web_sm")
-
-# Split text into words and punctuation
-WORD_SPLIT_REGEX = re.compile(r'(\W)', re.UNICODE)
-
-def split_words_punct(text):
-    """Split text into words and punctuation."""
-    parts = WORD_SPLIT_REGEX.split(text)
-    return [p for p in parts if p.strip() != '']
+# Load a multilingual model
+nlp = spacy.load("xx_ent_wiki_sm")
 
 def compare_texts(reference, user_input):
-    ref_tokens = split_words_punct(reference)
-    user_tokens = split_words_punct(user_input)
+    """
+    Compare user input to reference text.
+    Returns detailed word-by-word results with status: correct, incorrect, missing, extra.
+    Accuracy now counts all reference words including missing ones.
+    """
+    def tokenize(text):
+        """Tokenize text while keeping apostrophes attached in French/Spanish."""
+        doc = nlp(text)
+        tokens = []
+        for token in doc:
+            # Attach apostrophes to previous word
+            if token.text.startswith("'") and tokens:
+                tokens[-1] += token.text
+            else:
+                tokens.append(token.text)
+        return tokens
 
+    ref_tokens = tokenize(reference)
+    user_tokens = tokenize(user_input)
     matcher = SequenceMatcher(None, ref_tokens, user_tokens)
     result = []
-
-    matched_indices = set()
+    correct_count = 0
+    total_words = len(ref_tokens)
 
     for tag, i1, i2, j1, j2 in matcher.get_opcodes():
-        if tag == 'equal':
-            for u_idx in range(j1, j2):
-                result.append({"text": user_tokens[u_idx], "status": "correct"})
-            matched_indices.update(range(i1, i2))
+        if tag == "equal":
+            for idx in range(i1, i2):
+                result.append({
+                    "text": ref_tokens[idx],
+                    "status": "correct"
+                })
+            correct_count += (i2 - i1)
 
-        elif tag == 'replace':
+        elif tag == "replace":
+            # Words user wrote that are wrong
             for r_idx, u_idx in zip(range(i1, i2), range(j1, j2)):
                 result.append({
                     "text": user_tokens[u_idx],
-                    "status": "incorrect",
-                    "expected": ref_tokens[r_idx]
+                    "status": "incorrect"
                 })
-                matched_indices.add(r_idx)
-
-            # Handle extra words if user typed more than reference
-            if (i2 - i1) < (j2 - j1):
-                for u_idx in range(j1 + (i2 - i1), j2):
+            # Missing words from user
+            if (i2 - i1) > (j2 - j1):
+                for r_idx in range(j2 - j1 + i1, i2):
+                    result.append({
+                        "text": ref_tokens[r_idx],
+                        "status": "missing"
+                    })
+            # Extra words typed by user
+            if (j2 - j1) > (i2 - i1):
+                for u_idx in range(i2 - i1 + j1, j2):
                     result.append({
                         "text": user_tokens[u_idx],
                         "status": "extra"
                     })
-            # Handle missing words if user typed fewer
-            elif (i2 - i1) > (j2 - j1):
-                for r_idx in range(i1 + (j2 - j1), i2):
-                    result.append({
-                        "text": ref_tokens[r_idx],
-                        "status": "missing"
-                    })
 
-        elif tag == 'delete':
+        elif tag == "delete":
             for r_idx in range(i1, i2):
-                if r_idx not in matched_indices:
-                    result.append({
-                        "text": ref_tokens[r_idx],
-                        "status": "missing"
-                    })
+                result.append({
+                    "text": ref_tokens[r_idx],
+                    "status": "missing"
+                })
 
-        elif tag == 'insert':
+        elif tag == "insert":
             for u_idx in range(j1, j2):
                 result.append({
                     "text": user_tokens[u_idx],
                     "status": "extra"
                 })
 
-    # Calculate simple accuracy: correct words / total reference words
-    correct_count = sum(1 for w in result if w["status"] == "correct")
-    accuracy = (correct_count / len(ref_tokens) * 100) if ref_tokens else 0
+    # Accuracy = correct words / total reference words (missing counts as wrong)
+    accuracy = (correct_count / total_words) * 100 if total_words > 0 else 0
 
-    return {"result": result, "accuracy": round(accuracy, 1)}
+    return {
+        "result": result,
+        "accuracy": round(accuracy, 1)
+    }
 
 
-# ----------------------------
 # Example usage
-# ----------------------------
 if __name__ == "__main__":
-    reference_text = "All happy families are alike, but every unhappy family is unhappy in its own way."
-    user_input_text = "All happy families are happy in its own way right?"
+    reference_text = (
+        "Les animaux sont intéressants. J'aime beaucoup les chats et les chiens. "
+        "Les chats sont très indépendants, mais les chiens sont toujours heureux et jouent avec les gens. "
+        "Chez moi, j'ai un chat qui s'appelle Bella. Elle aime dormir et jouer avec ses jouets. "
+        "Les animaux rendent la vie plus joyeuse."
+    )
+    user_input_text = "Les animaux sont intressants. J'ème beaucoup les chats et les chiens. Les chats sont très depnedant, mais chiens toujours heureux"
 
-    result = compare_texts(reference_text, user_input_text)
-
-    import pprint
-    pprint.pprint(result)
+    import json
+    print(json.dumps(compare_texts(reference_text, user_input_text), ensure_ascii=False, indent=2))
