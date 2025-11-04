@@ -43,6 +43,11 @@
   font-weight: bold;
 }
 
+.correction {
+  color: #1bdf3c;
+  font-weight: bold;
+}
+
 .incorrect {
   color: #ef2929;;
   text-decoration: underline;

@@ -1,21 +1,18 @@
 import spacy
 from difflib import SequenceMatcher
 
-# Load a multilingual model
 nlp = spacy.load("xx_ent_wiki_sm")
 
 def compare_texts(reference, user_input):
     """
     Compare user input to reference text.
-    Returns detailed word-by-word results with status: correct, incorrect, missing, extra.
-    Accuracy now counts all reference words including missing ones.
+    Returns word-by-word results with status:
+    'correct', 'incorrect', 'missing', 'extra', 'correction'.
     """
     def tokenize(text):
-        """Tokenize text while keeping apostrophes attached in French/Spanish."""
         doc = nlp(text)
         tokens = []
         for token in doc:
-            # Attach apostrophes to previous word
             if token.text.startswith("'") and tokens:
                 tokens[-1] += token.text
             else:
@@ -39,13 +36,17 @@ def compare_texts(reference, user_input):
             correct_count += (i2 - i1)
 
         elif tag == "replace":
-            # Words user wrote that are wrong
+            # Words typed incorrectly
             for r_idx, u_idx in zip(range(i1, i2), range(j1, j2)):
                 result.append({
                     "text": user_tokens[u_idx],
                     "status": "incorrect"
                 })
-            # Missing words from user
+                result.append({
+                    "text": ref_tokens[r_idx],
+                    "status": "correction"
+                })
+            # Words missing in user's input
             if (i2 - i1) > (j2 - j1):
                 for r_idx in range(j2 - j1 + i1, i2):
                     result.append({
@@ -74,7 +75,6 @@ def compare_texts(reference, user_input):
                     "status": "extra"
                 })
 
-    # Accuracy = correct words / total reference words (missing counts as wrong)
     accuracy = (correct_count / total_words) * 100 if total_words > 0 else 0
 
     return {
