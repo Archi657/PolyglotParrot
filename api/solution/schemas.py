@@ -1,5 +1,6 @@
 def serialization_solution(solution):
     return {
+        "_id": str(solution["_id"]),  
         "userID" : str(solution["userID"]),
         "dictationID" : (solution["dictationID"]),
         "dictationTitle" : (solution["dictationTitle"]),

@@ -23,6 +23,7 @@ export const getDictationsUser = async (id) => {
 
     // Map to simplified objects
     const dictations = solutions.map(sol => ({
+      id: sol._id,
       dictationID: sol.dictationID,
       dictationTitle: sol.dictationTitle,
       accuracy: sol.accuracy
@@ -85,7 +86,7 @@ export const getDictationAudios = async (audios) => {
     const urls = [];
 
     for (const audio of audios) {
-      console.log("Audio : ", audio.file_id)
+      //console.log("Audio : ", audio.file_id)
       const response = await api.get(`/dictations/audio/${audio.file_id}`, {
         responseType: 'blob',
       });
@@ -124,6 +125,28 @@ export const getDictationAudio = async (audio) => {
     };
   }
 };
+
+export const getSolution = async (solutionId) => {
+  try {
+    //console.log("Fetching solutionId:", solutionId);
+
+    const response = await api.get(`/solutions/get/${solutionId}`);
+
+    // Axios automatically throws for non-2xx statuses,
+    // so no need to check response.ok
+    const solutionData = response.data;
+
+    //console.log("Full solution object:", solutionData);
+    //console.log("Word-level solution array:", solutionData.solution);
+
+    return solutionData;
+
+  } catch (err) {
+    console.error("Error fetching solution:", err);
+    alert("Failed to load solution.");
+  }
+};
+
 
 export const register = async (user) => {
   try {
@@ -170,3 +193,4 @@ export const login = async (user) => {
     throw error;
   }
 };
+

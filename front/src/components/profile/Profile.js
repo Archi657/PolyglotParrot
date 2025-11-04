@@ -7,7 +7,7 @@ import { dataset, valueFormatter } from "./data";
 import { getDictationsUser } from "../../api/routes";
 import Emoji from "../shared/emoji/Emoji";
 import "./Profile.css"; // ✅ import the CSS file
-
+import { getSolution } from "../../api/routes";
 const Profile = () => {
   const chartSetting = {
     xAxis: [{ label: "Dictations" }],
@@ -42,6 +42,7 @@ const Profile = () => {
 
         setLoading(true);
         const data = await getDictationsUser(username);
+        //console.log(data)
         setDictations(data || []);
       } catch (error) {
         console.error("Error fetching dictations for user:", error);
@@ -186,14 +187,19 @@ const Profile = () => {
         <Typography className="loading-text">Loading dictations...</Typography>
       ) : Array.isArray(dictations) && dictations.length > 0 ? (
         dictations.map((d, index) => (
-          <Box key={index} className="dictation-card">
-            <Box>
-              <Typography variant="h6">{d.dictationTitle}</Typography>
-              <Typography variant="body2" className="dictation-accuracy">
-                Accuracy: {d.accuracy}%
-              </Typography>
-            </Box>
-          </Box>
+          <Box 
+      key={index} 
+      className="dictation-card" 
+      onClick={() => getSolution(d.id)}
+      style={{ cursor: "pointer" }}
+    >
+      <Box>
+        <Typography variant="h6">{d.dictationTitle}</Typography>
+        <Typography variant="body2" className="dictation-accuracy">
+          Accuracy: {d.accuracy}%
+        </Typography>
+      </Box>
+    </Box>
         ))
       ) : (
         <Typography className="no-dictations">No dictations found</Typography>

@@ -11,6 +11,7 @@ import ConfirmButton from "../shared/btn-confirm/ConfirmButton";
 import { getDictationDetails, getDictationAudio } from '../../api/routes'; // per-audio fetch
 
 const Dictation = () => {
+
   const [dictation, setDictation] = useState({});
   const [audioFiles, setAudioFiles] = useState([]);
   const [typedText, setTypedText] = useState('');
