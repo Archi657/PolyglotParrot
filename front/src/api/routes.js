@@ -136,6 +136,8 @@ export const getSolution = async (solutionId) => {
 
     //console.log("Full solution object:", solutionData);
     //console.log("Word-level solution array:", solutionData.solution);
+
+    console.log(solutionData)
     return solutionData;
 
   } catch (err) {

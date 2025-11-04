@@ -36,7 +36,7 @@ const Dictation = () => {
 
         // progressive loading of audios
         if (location.state?.solution) {
-          setCorrectedText([location.state.solution.solution]); // wrap in array to match TextDictation format
+          setCorrectedText([location.state.solution.solution, location.state.solution.accuracy ]); 
           setTypedText(''); // clear typed text since we are viewing old solution
         } else {
           for (const audio of dictationData.audios) {
