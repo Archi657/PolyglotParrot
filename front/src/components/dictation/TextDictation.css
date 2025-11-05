@@ -34,18 +34,28 @@
   font-size: 1.6rem;       /* match editable text */
   line-height: 2.2rem;
   font-family: monospace;
-  color: #fff;
+  color: #ef2929;
 }
 
 /* Styling for correct/incorrect words */
 .correct {
-  color: #8ae234;
+  color: #fff;
+  font-weight: bold;
+}
+
+.correction {
+  color: #1bdf3c;
   font-weight: bold;
 }
 
 .incorrect {
-  color: #ef2929;
+  color: #ef2929;;
   text-decoration: underline;
+}
+
+.missing {
+  color: #babdb6;
+  font-weight: bold;
 }
 
 .extra {
@@ -57,6 +67,7 @@
   color: #005eff;
   font-style: italic;
 }
+
 
 /* Optional: scrollbar style */
 .text-container::-webkit-scrollbar {

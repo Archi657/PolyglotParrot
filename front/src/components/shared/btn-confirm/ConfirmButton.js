@@ -27,7 +27,7 @@ const ConfirmButton = ({ actionType, buttonText, dictation, typedText, setCorrec
   // Example actions
   const sendDictation = async () => {
     try {
-      console.log("Sending dictation...", dictation, typedText);
+      //console.log("Sending dictation...", dictation, typedText);
       // I will also need here the User ID when log in is ready to identify the user
       // from dic I need, ID-TITLE-TEXT, 
       // typedText
@@ -36,7 +36,7 @@ const ConfirmButton = ({ actionType, buttonText, dictation, typedText, setCorrec
       //console.log("Response from backend:", response);
       if (response?.result) {
         setCorrectedText(response.result);
-        console.log("corrected text : ", response.result)
+        //console.log("corrected text : ", response.result)
 
       }
       setIsVisible(!isVisible)

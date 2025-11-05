@@ -22,7 +22,8 @@
   "Dictation": {
     "audios_loading": "Chargement des audios...",
     "audio_header": "Clips audio",
-    "result": "Résultat"
+    "result": "Résultat",
+    "send": "Envoyer"
   },
   "Options": {
     "yes": "Oui",

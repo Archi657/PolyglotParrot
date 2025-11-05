@@ -1,5 +1,6 @@
 import api from './axiosConfig';
 import { jwtDecode } from 'jwt-decode';
+
 // can be improved to receive less items. maybe keep random?
 export const getSlider = async () => {
   try {
@@ -23,6 +24,7 @@ export const getDictationsUser = async (id) => {
 
     // Map to simplified objects
     const dictations = solutions.map(sol => ({
+      id: sol._id,
       dictationID: sol.dictationID,
       dictationTitle: sol.dictationTitle,
       accuracy: sol.accuracy
@@ -69,7 +71,7 @@ export const postDictation = async (userID, dictation, typedText) => {
     const dictationID = dictation.id
     const dictationTitle = dictation.title
     const dictationText = dictation.text
-    const response = await api.post(`/solutions/`, { userID, dictationID, dictationTitle, dictationText, typedText });
+    const response = await api.post(`/solutions/`, { userID, dictationID, dictationTitle, typedText, dictationText });
     return response.data
   } catch (error) {
     console.error('Error fetching dictation details:', error);
@@ -85,7 +87,7 @@ export const getDictationAudios = async (audios) => {
     const urls = [];
 
     for (const audio of audios) {
-      console.log("Audio : ", audio.file_id)
+      //console.log("Audio : ", audio.file_id)
       const response = await api.get(`/dictations/audio/${audio.file_id}`, {
         responseType: 'blob',
       });
@@ -124,6 +126,26 @@ export const getDictationAudio = async (audio) => {
     };
   }
 };
+
+export const getSolution = async (solutionId) => {
+  try {
+    //console.log("Fetching solutionId:", solutionId);
+
+    const response = await api.get(`/solutions/get/${solutionId}`);
+    const solutionData = response.data;
+
+    //console.log("Full solution object:", solutionData);
+    //console.log("Word-level solution array:", solutionData.solution);
+
+    console.log(solutionData)
+    return solutionData;
+
+  } catch (err) {
+    console.error("Error fetching solution:", err);
+    alert("Failed to load solution.");
+  }
+};
+
 
 export const register = async (user) => {
   try {
@@ -170,3 +192,4 @@ export const login = async (user) => {
     throw error;
   }
 };
+

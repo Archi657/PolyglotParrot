@@ -1,14 +1,16 @@
 /* eslint-disable */
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Avatar, Box, Stack, Typography } from "@mui/material";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { dataset, valueFormatter } from "./data";
 import { getDictationsUser } from "../../api/routes";
 import Emoji from "../shared/emoji/Emoji";
 import "./Profile.css"; // ✅ import the CSS file
-
+import { getSolution } from "../../api/routes";
 const Profile = () => {
+
+  const navigate = useNavigate()
   const chartSetting = {
     xAxis: [{ label: "Dictations" }],
     height: 300,
@@ -19,6 +21,14 @@ const Profile = () => {
   const { username } = useParams();
   const [dictations, setDictations] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const handleViewSolution = async (solutionId) => {
+  const solutionData = await getSolution(solutionId);
+
+  if (solutionData) {
+    navigate(`/dictation/${solutionData.dictationID}`, { state: { solution: solutionData } });
+  }
+};
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,6 +52,7 @@ const Profile = () => {
 
         setLoading(true);
         const data = await getDictationsUser(username);
+        //console.log(data)
         setDictations(data || []);
       } catch (error) {
         console.error("Error fetching dictations for user:", error);
@@ -186,14 +197,19 @@ const Profile = () => {
         <Typography className="loading-text">Loading dictations...</Typography>
       ) : Array.isArray(dictations) && dictations.length > 0 ? (
         dictations.map((d, index) => (
-          <Box key={index} className="dictation-card">
-            <Box>
-              <Typography variant="h6">{d.dictationTitle}</Typography>
-              <Typography variant="body2" className="dictation-accuracy">
-                Accuracy: {d.accuracy}%
-              </Typography>
-            </Box>
-          </Box>
+          <Box 
+      key={index} 
+      className="dictation-card" 
+      onClick={() => handleViewSolution(d.id)}
+      style={{ cursor: "pointer" }}
+    >
+      <Box>
+        <Typography variant="h6">{d.dictationTitle}</Typography>
+        <Typography variant="body2" className="dictation-accuracy">
+          Accuracy: {d.accuracy}%
+        </Typography>
+      </Box>
+    </Box>
         ))
       ) : (
         <Typography className="no-dictations">No dictations found</Typography>
