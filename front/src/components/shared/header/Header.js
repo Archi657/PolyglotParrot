@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
 //import { jwtDecode } from 'jwt-decode';
 import { Avatar } from "@mui/material";
-import logo from "../../../assets/Logo32.png"
+import logo from "../../../assets/parrot40kak.png"
 const Header = () => {
     const [token, setToken] = useState(localStorage.getItem("token"));
     const [username, setUsername] = useState(localStorage.getItem("username"));
