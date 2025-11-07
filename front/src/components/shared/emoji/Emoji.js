@@ -13,7 +13,10 @@ const dict = {
   japanese: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f1ef-1f1f5.png",
   korean: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f1f0-1f1f7.png",
   portuguese: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f1f5-1f1f9.png",
-  chinese: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f1e8-1f1f3.png"
+  chinese: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f1e8-1f1f3.png",
+  bird: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f426.svg",
+  heart: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/2764.svg",
+  hand_heart: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1faf6.svg"
 };
 
 const Emoji = ({ emoji, size, onClick, cursor }) => {
