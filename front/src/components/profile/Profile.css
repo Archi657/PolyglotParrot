@@ -16,10 +16,10 @@
 }
 
 .profile-avatar {
-  width: 120px !important;
-  height: 120px !important;
-  box-shadow: 0 0 10px rgba(66, 165, 245, 0.8);
-  border: 3px solid #42a5f5 !important;
+  width: 180px !important;
+  height: 180px !important;
+  box-shadow: 0 0 10px #ffaa5e;
+  border: 3px solid #ffaa5e !important;
 }
 
 .profile-username {
@@ -46,6 +46,7 @@
 
 .stat-value.blue {
   color: #42a5f5;
+  size: 20rem;
 }
 
 .stat-value.orange {

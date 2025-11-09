@@ -9,6 +9,7 @@ import HeaderDictation from './HeaderDictation';
 import ConfirmButton from "../shared/btn-confirm/ConfirmButton";
 
 import { getDictationDetails, getDictationAudio } from '../../api/routes'; // per-audio fetch
+import Emoji from '../shared/emoji/Emoji';
 
 const Dictation = () => {
 
@@ -36,7 +37,7 @@ const Dictation = () => {
 
         // progressive loading of audios
         if (location.state?.solution) {
-          setCorrectedText([location.state.solution.solution, location.state.solution.accuracy ]); 
+          setCorrectedText([location.state.solution.solution, location.state.solution.accuracy]);
           setTypedText(''); // clear typed text since we are viewing old solution
         } else {
           for (const audio of dictationData.audios) {
@@ -44,24 +45,17 @@ const Dictation = () => {
             setAudioFiles(prev => [...prev, audioObj]);      // add only once
             await new Promise(resolve => setTimeout(resolve, 100)); // optional delay
           }
-
-
-
           // NEW: handle solution passed via state
           if (location.state?.solution) {
-            
             setCorrectedText([location.state.solution.solution]); // wrap in array to match TextDictation format
             console.log(correctedText)
             setTypedText(''); // clear typed text since we are viewing old solution
           }
         }
-
-
       } catch (error) {
         console.error('Error fetching dictation or audio:', error);
       }
     };
-
     fetchData();
   }, [id, location.state]);
 
@@ -86,13 +80,13 @@ const Dictation = () => {
           />
 
           {!correctedText && (
-          <ConfirmButton
-            actionType="sendDictation"
-            buttonText={send}
-            dictation={dictation}
-            typedText={typedText}
-            setCorrectedText={setCorrectedText}
-          />
+            <ConfirmButton
+              actionType="sendDictation"
+              buttonText={send}
+              dictation={dictation}
+              typedText={typedText}
+              setCorrectedText={setCorrectedText}
+            />
           )}
           {correctedText && (
             <div>
@@ -103,24 +97,28 @@ const Dictation = () => {
         </div>
 
         {!correctedText && (
-  <div className="dictation-audio">
-    <h3 style={{ textAlign: "center", marginBottom: "10px" }}>{audio_header}</h3>
-    <div className="audio-grid">
-      {audioFiles.map(({ label, url, loading }) => (
-        <div key={label} className="audio-item">
-          {loading ? (
-            <div className="audio-skeleton"></div>
-          ) : (
-            <>
-              <AudioPlayer audioFile={url} />
-              <p className="audio-label">{label}</p>
-            </>
-          )}
-        </div>
-      ))}
-    </div>
-  </div>
-)}
+          <div className="dictation-audio">
+            <div style={{ display: "inline-flex", alignItems: "center", padding: "20px" }}>
+              <Emoji emoji="audio" size={45} />
+              <h3 style={{ textAlign: "center", marginBottom: "10px", paddingLeft: "35px" }}>{audio_header}</h3>
+            </div>
+
+            <div className="audio-grid">
+              {audioFiles.map(({ label, url, loading }) => (
+                <div key={label} className="audio-item">
+                  {loading ? (
+                    <div className="audio-skeleton"></div>
+                  ) : (
+                    <>
+                      <AudioPlayer audioFile={url} />
+                      <p className="audio-label">{label}</p>
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
       </div>
     </>

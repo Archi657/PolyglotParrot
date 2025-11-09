@@ -12,9 +12,9 @@ export const getSlider = async () => {
 }
 
 // Fetch all dictations (solutions) for a given user
-export const getDictationsUser = async (id) => {
+export const getDictationsUser = async (username) => {
   try {
-    const response = await api.get(`/solutions/${id}`); // or /solutions/by-username/{username} if you use username
+    const response = await api.get(`/solutions/${username}`); // or /solutions/by-username/{username} if you use username
     const solutions = response.data;
 
     if (!Array.isArray(solutions) || solutions.length === 0) {
@@ -22,23 +22,24 @@ export const getDictationsUser = async (id) => {
       return [];
     }
 
-    // Map to simplified objects
+    // TODO language to be able to filder and add flag ?
     const dictations = solutions.map(sol => ({
       id: sol._id,
       dictationID: sol.dictationID,
       dictationTitle: sol.dictationTitle,
-      accuracy: sol.accuracy
+      accuracy: sol.accuracy,
+      language: sol.language,
+      difficulty: sol.difficulty
     }));
 
-    //console.log("User dictations:", dictations);
+    // DEBUG console.log("User dictations:", dictations);
     return dictations;
 
   } catch (error) {
-    console.error("Error fetching dictation details:", error);
+    console.error("Error solutions for the user :", error);
     throw error;
   }
 };
-
 
 // Fetch dictation details
 export const getDictationDetails = async (id) => {
@@ -55,7 +56,7 @@ export const getDictationDetails = async (id) => {
       audios: response.data.audios
     };
 
-    //console.log("dif " + response.data.difficulty)
+    // DEBUG console.log("difficulty " + response.data.difficulty)
 
     return dictation;
   } catch (error) {
@@ -64,44 +65,20 @@ export const getDictationDetails = async (id) => {
   }
 };
 
-//change name, fix details
+// TODO Add language ? 
 export const postDictation = async (userID, dictation, typedText) => {
   try {
-    // Fetch dictation details
+    
     const dictationID = dictation.id
     const dictationTitle = dictation.title
     const dictationText = dictation.text
-    const response = await api.post(`/solutions/`, { userID, dictationID, dictationTitle, typedText, dictationText });
+    const language = dictation.language
+    const difficulty = dictation.difficulty
+    console.log(difficulty)
+    const response = await api.post(`/solutions/`, { userID, dictationID, dictationTitle, typedText, dictationText, language, difficulty });
     return response.data
   } catch (error) {
-    console.error('Error fetching dictation details:', error);
-    throw error;
-  }
-};
-
-
-
-// maybe delete and replace it?
-export const getDictationAudios = async (audios) => {
-  try {
-    const urls = [];
-
-    for (const audio of audios) {
-      //console.log("Audio : ", audio.file_id)
-      const response = await api.get(`/dictations/audio/${audio.file_id}`, {
-        responseType: 'blob',
-      });
-
-      const audioUrl = URL.createObjectURL(response.data);
-      urls.push({
-        label: audio.label,
-        url: audioUrl
-      });
-    }
-
-    return urls;
-  } catch (error) {
-    console.error('Error fetching dictation audios:', error);
+    console.error('Error uploading dictation solution to be solved:', error);
     throw error;
   }
 };
@@ -122,21 +99,15 @@ export const getDictationAudio = async (audio) => {
     console.error('Error fetching audio:', audio.file_id, error);
     return {
       label: audio.label,
-      url: null, // fallback
+      url: null, 
     };
   }
 };
 
 export const getSolution = async (solutionId) => {
   try {
-    //console.log("Fetching solutionId:", solutionId);
-
     const response = await api.get(`/solutions/get/${solutionId}`);
     const solutionData = response.data;
-
-    //console.log("Full solution object:", solutionData);
-    //console.log("Word-level solution array:", solutionData.solution);
-
     console.log(solutionData)
     return solutionData;
 
@@ -193,3 +164,28 @@ export const login = async (user) => {
   }
 };
 
+/* Get audios in a bucle
+export const getDictationAudios = async (audios) => {
+  try {
+    const urls = [];
+
+    for (const audio of audios) {
+      //console.log("Audio : ", audio.file_id)
+      const response = await api.get(`/dictations/audio/${audio.file_id}`, {
+        responseType: 'blob',
+      });
+
+      const audioUrl = URL.createObjectURL(response.data);
+      urls.push({
+        label: audio.label,
+        url: audioUrl
+      });
+    }
+
+    return urls;
+  } catch (error) {
+    console.error('Error fetching dictation audios:', error);
+    throw error;
+  }
+};
+*/

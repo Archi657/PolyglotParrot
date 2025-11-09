@@ -31,6 +31,8 @@ async def solve(data: SolutionInput):
             userID=data.userID,
             dictationID=data.dictationID,
             dictationTitle=data.dictationTitle,
+            language=data.language,
+            difficulty=data.difficulty,
             solution=comparison_result["result"],
             accuracy= comparison_result["accuracy"]
         )

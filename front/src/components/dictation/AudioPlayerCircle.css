@@ -3,7 +3,7 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: #f2f0f0;
+  background-color: #565151;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,14 +15,14 @@
 
 .audio-circle:hover {
   transform: scale(1.1);
-  background-color: #dcdcdc;
+  background-color: #9b9898;
 }
 
 /* Play triangle */
 .triangle {
   width: 0;
   height: 0;
-  border-left: 16px solid #4beade;
+  border-left: 16px solid #ffaa5e;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
   transition: all 0.2s ease;
@@ -35,10 +35,10 @@
   height: 18px;
   background: linear-gradient(
     to right,
-    #4beade 40%,
+    #c81d3b 40%,
     transparent 40%,
     transparent 60%,
-    #4beade 60%
+    #c81d3b 60%
   );
 }
 

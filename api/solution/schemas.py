@@ -4,6 +4,8 @@ def serialization_solution(solution):
         "userID" : str(solution["userID"]),
         "dictationID" : (solution["dictationID"]),
         "dictationTitle" : (solution["dictationTitle"]),
+        "language": solution.get("language", "unknown"),
+        "difficulty": solution.get("difficulty", "unknown"),
         "solution" : solution.get("solution", []),
         "accuracy" :  (solution["accuracy"])
     }

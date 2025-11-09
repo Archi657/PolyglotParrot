@@ -8,6 +8,7 @@ import { getDictationsUser } from "../../api/routes";
 import Emoji from "../shared/emoji/Emoji";
 import "./Profile.css"; // ✅ import the CSS file
 import { getSolution } from "../../api/routes";
+import { useTranslation } from "react-i18next";
 const Profile = () => {
 
   const navigate = useNavigate()
@@ -22,13 +23,16 @@ const Profile = () => {
   const [dictations, setDictations] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const handleViewSolution = async (solutionId) => {
-  const solutionData = await getSolution(solutionId);
+  const { t } = useTranslation()
+  const { langText, dictText, perfoText } = t("Profile")
 
-  if (solutionData) {
-    navigate(`/dictation/${solutionData.dictationID}`, { state: { solution: solutionData } });
-  }
-};
+  const handleViewSolution = async (solutionId) => {
+    const solutionData = await getSolution(solutionId);
+
+    if (solutionData) {
+      navigate(`/dictation/${solutionData.dictationID}`, { state: { solution: solutionData } });
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,13 +71,14 @@ const Profile = () => {
     <Box className="profile-container">
       {/* Avatar + Username */}
       <Box className="profile-header">
-        <Stack spacing={1.5} alignItems="center">
+        <Stack spacing={2} alignItems="center">
           <Avatar
             alt={user?.username ?? username}
             src={user?.avatar}
             className="profile-avatar"
+            sx={{ width: 12, height: 12 }}
           />
-          <Typography variant="h5" component="h1" align="center" className="profile-username">
+          <Typography variant="h4" component="h1" align="center" className="profile-username">
             {user?.username ?? username}
           </Typography>
         </Stack>
@@ -82,40 +87,35 @@ const Profile = () => {
       {/* Stats */}
       <Box className="profile-stats">
         <Box className="stat-box">
-          <Typography fontSize="1.5rem">📝</Typography>
-          <Typography className="stat-value blue">
-            {user.stats?.dictationsDone}
-          </Typography>
-          <Typography variant="body2" className="stat-label">
-            Dictations
-          </Typography>
-        </Box>
-        <Box className="stat-box">
-          <Typography fontSize="1.5rem">🌍</Typography>
+          
           <Box className="stat-languages">
             {user.stats?.languagesUsed?.map((lang, i) => (
-              <Emoji key={i} emoji={lang} size={28} />
+              <Emoji key={i} emoji={lang} size={53} />
             ))}
           </Box>
-          <Typography variant="body2" className="stat-label">
-            Languages
+          <Typography className="stat-value blue" variant="h5">
+            2
+          </Typography>
+          <Typography variant="body3" className="stat-label">
+            {langText}
           </Typography>
         </Box>
         <Box className="stat-box">
-          <Typography fontSize="1.5rem">🔥</Typography>
-          <Typography className="stat-value orange">
-            {user.stats?.streak} days
+          <Emoji emoji="write" size={53}/>
+          <Typography className="stat-value blue" variant="h5">
+            {user.stats?.dictationsDone}
           </Typography>
-          <Typography variant="body2" className="stat-label">
-            Streak
+          <Typography  variant="body3" className="stat-label">
+            {dictText}
           </Typography>
         </Box>
+
       </Box>
 
       {/* Chart 1 */}
       <Box className="chart-box">
-        <Typography variant="h6" mb={2}>
-          Performance
+        <Typography variant="h5" mb={2}>
+          {perfoText}
         </Typography>
         <BarChart
           xAxis={[{
@@ -153,7 +153,7 @@ const Profile = () => {
 
       {/* Chart 2 */}
       <Box className="chart-box">
-        <Typography variant="h6" mb={2}>
+        <Typography variant="h5" mb={2}>
           Dictations per Month
         </Typography>
         <BarChart
@@ -197,19 +197,20 @@ const Profile = () => {
         <Typography className="loading-text">Loading dictations...</Typography>
       ) : Array.isArray(dictations) && dictations.length > 0 ? (
         dictations.map((d, index) => (
-          <Box 
-      key={index} 
-      className="dictation-card" 
-      onClick={() => handleViewSolution(d.id)}
-      style={{ cursor: "pointer" }}
-    >
-      <Box>
-        <Typography variant="h6">{d.dictationTitle}</Typography>
-        <Typography variant="body2" className="dictation-accuracy">
-          Accuracy: {d.accuracy}%
-        </Typography>
-      </Box>
-    </Box>
+          <Box
+            key={index}
+            className="dictation-card"
+            onClick={() => handleViewSolution(d.id)}
+            style={{ cursor: "pointer" }}
+          >
+            <Box>
+              <Emoji emoji={d.language} size={50} />
+              <Typography variant="h6">{d.dictationTitle}</Typography>
+              <Typography variant="h7" className="dictation-accuracy">
+                Accuracy: {d.accuracy}%
+              </Typography>
+            </Box>
+          </Box>
         ))
       ) : (
         <Typography className="no-dictations">No dictations found</Typography>
@@ -219,3 +220,28 @@ const Profile = () => {
 };
 
 export default Profile;
+
+/*
+
+<Box className="stat-box">
+          <Typography fontSize="1.5rem">🌍</Typography>
+          <Box className="stat-languages">
+            {user.stats?.languagesUsed?.map((lang, i) => (
+              <Emoji key={i} emoji={lang} size={28} />
+            ))}
+          </Box>
+          <Typography variant="body2" className="stat-label">
+            Languages
+          </Typography>
+        </Box>
+        <Box className="stat-box">
+          <Typography fontSize="1.5rem">🔥</Typography>
+          <Typography className="stat-value orange">
+            {user.stats?.streak} days 
+          </Typography>
+          <Typography variant="body2" className="stat-label">
+            Streak
+          </Typography>
+        </Box>
+
+*/

@@ -46,7 +46,7 @@ const Header = () => {
     return (
         <Navbar bg="dark" variant="dark" expand="lg">
             <Container fluid>
-                <Navbar.Brand style={{ color: 'gold' }}>
+                <Navbar.Brand style={{ color: '#ffaa5e' }}>
                     <img 
                     src={logo} 
                     alt="Parroglot Logo" 
@@ -73,7 +73,7 @@ const Header = () => {
                             <NavLink to={`/profile/${encodeURIComponent(username)}`} className="me-3">
                                 <Avatar alt={username} src="https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg" />
                             </NavLink>
-                            <Button variant="outline-warning" onClick={handleLogout}>
+                            <Button style={{ color: '#ffaa5e' }} variant="outline-warning" onClick={handleLogout}>
                                 {logout || "Logout"}
                             </Button>
                         </div>

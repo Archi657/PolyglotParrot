@@ -12,6 +12,8 @@ class SolutionCreate(BaseModel) :
     userID: str
     dictationID: str
     dictationTitle: str
+    language: str
+    difficulty: str
     solution: List[SolutionItem] # realize how to declare the solution array
     accuracy: PositiveFloat
 
@@ -19,5 +21,7 @@ class SolutionInput(BaseModel):
     userID: str
     dictationID: str
     dictationTitle: str
+    language: str
+    difficulty: str
     dictationText: str
     typedText: str
