@@ -71,8 +71,8 @@ const ConfirmButton = ({ actionType, buttonText, dictation, typedText, setCorrec
 // Example inline styles (optional)
 const buttonStyle = {
   padding: "10px 20px",
-  backgroundColor: "#007bff",
-  color: "white",
+  backgroundColor: "#ffaa5e",
+  color: "black",
   border: "none",
   borderRadius: "5px",
   cursor: "pointer",

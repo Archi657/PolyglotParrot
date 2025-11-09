@@ -32,6 +32,11 @@
         "title":"About us",
         "text":"Parroglot was created to redefine how people learn languages. As someone who successfully learned multiple languages independently, I discovered that dictations are one of the most effective tools for improving listening, spelling, and grammar.",
         "text_2": "This platform aims not only to provide dictations in various languages, but also to include powerful features designed to support and enhance every step of the learning process. With Parroglot, language learning becomes more interactive, intuitive, and rewarding."
+    },
+    "Profile":{
+        "langText":"Languages",
+        "dictText":"Dictations",
+        "perfoText": "Performance"
     }
 
 }

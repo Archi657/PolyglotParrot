@@ -26,7 +26,7 @@
   background: transparent;
   white-space: pre-wrap;
   word-break: break-word;
-  caret-color: #ffe100;
+  caret-color: #ffaa5e;
 }
 
 /* Corrected text display */
@@ -34,7 +34,7 @@
   font-size: 1.6rem;       /* match editable text */
   line-height: 2.2rem;
   font-family: monospace;
-  color: #ef2929;
+  color: #c81d3b;
 }
 
 /* Styling for correct/incorrect words */
@@ -49,7 +49,7 @@
 }
 
 .incorrect {
-  color: #ef2929;;
+  color: #c81d3b;
   text-decoration: underline;
 }
 

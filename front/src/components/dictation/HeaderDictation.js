@@ -14,7 +14,7 @@ const HeaderDictation = ({ title, language, image, difficulty }) => {
       : difficulty === "hard"
       ? Dichard
       : difficulty;
-
+// TODO Fix difficulty stuff and display of the emoji of diff
   return (
     <div style={{
       display: "flex",
@@ -40,7 +40,10 @@ const HeaderDictation = ({ title, language, image, difficulty }) => {
           {Diclanguage} :{" "}
           <Emoji key="en" emoji={language} size={24} />
         </p>
-        <p>{Dicdiff} : {difficultyLabel}</p>
+        <div style={{  display: "inline-flex", padding: "5px"}}>
+        <p>{Dicdiff} : {difficultyLabel} </p>
+        <Emoji key="en" emoji={difficulty} size={24} />
+        </div>
       </div>
     </div>
   );
