@@ -36,13 +36,14 @@ const HeaderDictation = ({ title, language, image, difficulty }) => {
 
       <div>
         <h2>{title}</h2>
-        <p>
+       <p style={{ fontSize: "18px" }}>
           {Diclanguage} :{" "}
-          <Emoji key="en" emoji={language} size={24} />
+          <Emoji key="en" emoji={language} size={28} />
         </p>
-        <div style={{  display: "inline-flex", padding: "5px"}}>
-        <p>{Dicdiff} : {difficultyLabel} </p>
-        <Emoji key="en" emoji={difficulty} size={24} />
+        <div style={{  display: "inline-flex"}}>
+        <p style={{ fontSize: "18px" }}>{Dicdiff} : {difficultyLabel} </p> 
+        &nbsp;&nbsp;
+        <Emoji key="en" emoji={difficulty} size={28} />
         </div>
       </div>
     </div>

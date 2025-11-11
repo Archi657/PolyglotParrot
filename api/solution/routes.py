@@ -84,6 +84,50 @@ async def get_by_id(id: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Server error: {e}")
 
-             
+@solution_router.get("/stats/{username}")
+async def profile_stats(username: str):
+    user_doc = user_collection.find_one({"username": username})
+    if not user_doc:
+        raise HTTPException(status_code=404, detail=f"User '{username}' not found")
+    
+    user_id = str(user_doc["_id"])
+
+    pipeline = [
+        {"$match": {"userID": user_id}},
+        {"$group": {
+            "_id": {"dictationID": "$dictationID", "language": "$language", "difficulty": "$difficulty"}
+        }},
+        {"$group": {
+            "_id": None,
+            "unique_dictations": {"$sum": 1},
+            "languages": {"$push": "$_id.language"},
+            "difficulties": {"$push": "$_id.difficulty"}
+        }}
+    ]
+
+    result = list(collection.aggregate(pipeline))
+    if not result:
+        return {
+            "username": username,
+            "unique_dictations_done": 0,
+            "per_language": {},
+            "per_difficulty": {}
+        }
+
+    res = result[0]
+
+    # Count per language and per difficulty
+    from collections import Counter
+    lang_count = dict(Counter(res["languages"]))
+    diff_count = dict(Counter(res["difficulties"]))
+
+    return {
+        "username": username,
+        "unique_dictations_done": res["unique_dictations"],
+        "per_language": lang_count,
+        "per_difficulty": diff_count
+    }
+
+
           
 
